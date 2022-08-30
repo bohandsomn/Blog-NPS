@@ -12,6 +12,26 @@ import { UserModule } from './user/user.module'
 import { FriendshipsModule } from './friendships/friendships.module'
 import { SubscribeModule } from './subscribe/subscribe.module'
 import { ConfigModule } from '@nestjs/config'
+import { PrivacyModule } from './privacy/privacy.module'
+import { ActivationModule } from './activation/activation.module'
+import { MessageModule } from './message/message.module'
+
+import { User } from './user/user.model'
+import { Privacy } from './privacy/privacy.model'
+import { PhotoUser } from './photo/photo-user/photo-user.model'
+import { Activation } from './activation/activation.model'
+import { Token } from './token/token.model'
+import { Subscribe } from './subscribe/subscribe.model'
+import { Chat } from './chat/chat.model'
+import { UserChat } from './chat/user-chat.model'
+import { PhotoChat } from './photo/photo-chat/photo-chat.model'
+import { Message } from './message/message.model'
+import { Post } from './post/post.model'
+import { Comment } from './comment/comment.model'
+import { LikesComment } from './likes/likes-comment/likes-comment.model'
+import { LikesPost } from './likes/likes-post/likes-post.model'
+import { UserChatRole } from './user/user-chat-role.model'
+import { UserRole } from './user/user-role.model'
 
 @Module({
   imports: [
@@ -25,6 +45,9 @@ import { ConfigModule } from '@nestjs/config'
     UserModule, 
     FriendshipsModule, 
     SubscribeModule,
+    PrivacyModule,
+    ActivationModule,
+    MessageModule,
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`
     }),
@@ -35,7 +58,7 @@ import { ConfigModule } from '@nestjs/config'
         username: process.env.POSTGRES_USER,
         password: process.env.POSTGRES_PASSWORD,
         database: process.env.POSTGRES_DB,
-        // models: [],
+        models: [User, Privacy, PhotoUser, Activation, Token, Subscribe, Chat, UserChat, PhotoChat, Message, Post, Comment, LikesComment, LikesPost, UserChatRole, UserRole],
         autoLoadModels: true
     }),
   ],
