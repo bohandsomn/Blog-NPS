@@ -16,6 +16,6 @@ export class Token extends Model<Token, TokenCreationAttributes> {
     @Column({type: DataType.INTEGER, allowNull: false})
     userId: number
     
-    @Column({type: DataType.BOOLEAN, allowNull: false})
+    @Column({type: DataType.TEXT, allowNull: false})
     value: string
 }

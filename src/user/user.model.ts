@@ -22,7 +22,7 @@ export class User extends Model<User, UserCreationAttributes> {
     @Column({type: DataType.STRING, allowNull: false})
     name: string
 
-    @Column({type: DataType.STRING})
+    @Column({type: DataType.STRING, defaultValue: null})
     surname: string | null
 
     @Column({type: DataType.STRING, allowNull: false, unique: true})
@@ -34,7 +34,7 @@ export class User extends Model<User, UserCreationAttributes> {
     @Column({type: DataType.STRING, allowNull: false})
     password: string
 
-    @Column({type: DataType.TIME})
+    @Column({type: DataType.TIME, defaultValue: null})
     birthday: string | null
 
     @ForeignKey(() => Privacy)

@@ -1,0 +1,47 @@
+{
+    "user": {
+        "update": {
+            "not-found": "User not found"
+        },
+        "email-verify": {
+            "has-email": "The user with this email is already registered"
+        },
+        "login-verify": {
+            "has-login": "The user with this login is already registered"
+        },
+        "id-verify": {
+            "has-id": "User not found"
+        }
+    },
+    "activation": {
+        "activate": {
+            "not-found": "User not found"
+        },
+        "get-by-id": {
+            "not-found": "User not found"
+        }
+    },
+    "authorization": {
+        "login": {
+            "invalid-password": "Invalid password"
+        }
+    },
+    "token": {
+        "refresh": {
+            "empty-token": "User not authorized"
+        },
+        "split": {
+            "unauthorized": "User not authorized"
+        }
+    },
+    "privacy": {
+        "verify": {
+            "entry-exists": "Database entry already exists"
+        }
+    },
+    "guard": {
+        "authorization": {
+            "unauthorized": "User not authorized"
+        }
+    }
+}
