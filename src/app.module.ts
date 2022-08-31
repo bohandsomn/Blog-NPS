@@ -1,5 +1,8 @@
 import { Module } from '@nestjs/common'
 import { SequelizeModule } from '@nestjs/sequelize'
+import * as path from 'path'
+import { I18nModule } from 'nestjs-i18n'
+import { MailerModule } from '@nestjs-modules/mailer'
 
 import { AuthorizationModule } from './authorization/authorization.module'
 import { ChatModule } from './chat/chat.module'
@@ -32,7 +35,14 @@ import { LikesComment } from './likes/likes-comment/likes-comment.model'
 import { LikesPost } from './likes/likes-post/likes-post.model'
 import { UserChatRole } from './user/user-chat-role.model'
 import { UserRole } from './user/user-role.model'
+import { MailModule } from './mail/mail.module'
 
+function logger<D>(data: D) {
+  console.log({
+    data
+  })
+  return data
+}
 @Module({
   imports: [
     AuthorizationModule, 
@@ -48,6 +58,7 @@ import { UserRole } from './user/user-role.model'
     PrivacyModule,
     ActivationModule,
     MessageModule,
+    MailModule,
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`
     }),
@@ -61,8 +72,27 @@ import { UserRole } from './user/user-role.model'
         models: [User, Privacy, PhotoUser, Activation, Token, Subscribe, Chat, UserChat, PhotoChat, Message, Post, Comment, LikesComment, LikesPost, UserChatRole, UserRole],
         autoLoadModels: true
     }),
-  ],
-  controllers: [],
-  providers: [],
+    I18nModule.forRoot({
+      fallbackLanguage: 'en',
+      loaderOptions: {
+        path: path.join(__dirname, '/i18n/'),
+        watch: true,
+      },
+    }),
+    MailerModule.forRoot({
+      transport: {
+        host: process.env.TRANSPORT_HOST,
+        port: parseInt(process.env.TRANSPORT_PORT),
+        secure: false,
+        auth: {
+          user: process.env.TRANSPORT_AUTH_USER,
+          pass: process.env.TRANSPORT_AUTH_PASS
+        },
+        tls: {
+          rejectUnauthorized: false
+        }
+      }
+    })
+  ]
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
-import { Column, DataType, ForeignKey, HasOne, Model, Table } from 'sequelize-typescript'
+import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript'
 import { User } from 'src/user/user.model'
 
 interface ActivationCreationAttributes {
