@@ -1,15 +1,13 @@
 import { NestFactory } from '@nestjs/core'
-import fastifyCookie from '@fastify/cookie'
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify'
+import { NestFastifyApplication } from '@nestjs/platform-fastify'
+import * as cookieParser from 'cookie-parser'
 // import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
 
 async function bootstrap() {
   const PORT = process.env.PORT
-  const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter())
+
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule)
 
   // const config = new DocumentBuilder()
   //   .setTitle('Blog docs')
@@ -19,9 +17,7 @@ async function bootstrap() {
   // const document = SwaggerModule.createDocument(app, config)
   // SwaggerModule.setup('api', app, document)
 
-  await app.register(fastifyCookie as any, {
-    secret: process.env.COOKIE_SECRET
-  })
+  app.use(cookieParser())
   await app.listen(PORT, () => console.log(`Server run on port = ${PORT}`))
 }
 bootstrap()

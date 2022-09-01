@@ -51,7 +51,7 @@ export class TokenService {
             throw new HttpException(this.i18nService.t<string>("exception.token.refresh.empty-token"), HttpStatus.UNAUTHORIZED)
         }
 
-        const id = (await this.verify(refreshToken)).id
+        const id = (await this.verify(refreshToken, 'REFRESH')).id
         await this.userService.idVerify(id, true)
         const user = await this.userService.getByPk(id)
 
@@ -74,8 +74,10 @@ export class TokenService {
         }
     }
 
-    async verify(token: string) {
-        const user = this.jwtService.verify<User>(token, {secret: process.env.JWT_REFRESH_SECRET_KEY})
+    async verify(token: string, type: 'REFRESH' | 'ACCESS') {
+        const secret = type === 'ACCESS' ? process.env.JWT_REFRESH_SECRET_KEY : process.env.JWT_ACCESS_SECRET_KEY
+        
+        const user = this.jwtService.verify<User>(token, {secret})
         return user
     }
 
