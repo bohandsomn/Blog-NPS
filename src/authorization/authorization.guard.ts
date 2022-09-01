@@ -23,9 +23,16 @@ export class AuthorizationGuard implements CanActivate {
 
         try {
             const authorization = request.headers.authorization
+            if (!authorization) {
+                throw new UnauthorizedException({message: i18n.t("exception.guard.authorization.unauthorized")})
+            }
             const token = this.tokenService.split(authorization)
-            const user = await this.tokenService.verify(token)
-            ;(request as any).user = user
+            const user = await this.tokenService.verify(token, 'ACCESS')
+            if (!user) {
+                throw new UnauthorizedException({message: i18n.t("exception.guard.authorization.unauthorized")})
+            }
+
+            (request as any).user = user
 
             return true
         } catch (error) {

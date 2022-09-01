@@ -36,13 +36,6 @@ import { LikesPost } from './likes/likes-post/likes-post.model'
 import { UserChatRole } from './user/user-chat-role.model'
 import { UserRole } from './user/user-role.model'
 import { MailModule } from './mail/mail.module'
-
-function logger<D>(data: D) {
-  console.log({
-    data
-  })
-  return data
-}
 @Module({
   imports: [
     AuthorizationModule, 

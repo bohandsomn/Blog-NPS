@@ -39,6 +39,16 @@
             "entry-exists": "Database entry already exists"
         }
     },
+    "file": {
+        "create": {
+            "something-went-wrong": "Something went wrong while uploading the file"
+        }
+    },
+    "photo-user": {
+        "create": {
+            "has-id": "The user is already registered"
+        }
+    },
     "guard": {
         "authorization": {
             "unauthorized": "User not authorized"

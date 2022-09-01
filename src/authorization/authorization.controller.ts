@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Headers, Param, Post, Redirect, Req, Res, UseGuards } from '@nestjs/common'
-import { FastifyReply } from 'fastify'
+import { Response } from 'express'
 import { AuthorizationGuard, RequestUser } from './authorization.guard'
 import { AuthorizationService } from './authorization.service'
 import { LoginAuthorizationDTO } from './DTO/login-authorization.dto'
@@ -12,9 +12,9 @@ export class AuthorizationController {
     ) { }
 
     @Post('registration')
-    async registration(@Body() dto: RegistrationAuthorizationDTO, @Res({ passthrough: true }) response: FastifyReply) {
+    async registration(@Body() dto: RegistrationAuthorizationDTO, @Res({ passthrough: true }) response: Response) {
         const { user, token: { refresh, access } } = await this.authorizationService.registration(dto)
-        response.setCookie(process.env.COOKIE_TOKEN_NAME, refresh, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })
+        response.cookie(process.env.COOKIE_TOKEN_NAME, refresh, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })
         return {
             user,
             token: access
@@ -22,9 +22,9 @@ export class AuthorizationController {
     }
 
     @Post('login')
-    async login(@Body() dto: LoginAuthorizationDTO, @Res({ passthrough: true }) response: FastifyReply) {
+    async login(@Body() dto: LoginAuthorizationDTO, @Res({ passthrough: true }) response: Response) {
         const { user, token: { refresh, access } } = await this.authorizationService.login(dto)
-        response.setCookie(process.env.COOKIE_TOKEN_NAME, refresh, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })
+        response.cookie(process.env.COOKIE_TOKEN_NAME, refresh, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })
         return {
             user,
             token: access
@@ -33,9 +33,9 @@ export class AuthorizationController {
 
     @Get('auto-login')
     @UseGuards(AuthorizationGuard)
-    async autoLogin(@Req() request: RequestUser, @Res() response: FastifyReply) {
+    async autoLogin(@Req() request: RequestUser, @Res() response: Response) {
         const { user, token: { refresh, access } } = await this.authorizationService.autoLogin(request.user)
-        response.setCookie(process.env.COOKIE_TOKEN_NAME, refresh, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })
+        response.cookie(process.env.COOKIE_TOKEN_NAME, refresh, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })
         return {
             user,
             token: access
@@ -43,9 +43,9 @@ export class AuthorizationController {
     }
 
     @Get('refresh')
-    async refresh(@Headers() headers: Record<'authorization', string>, @Res() response: FastifyReply) {
+    async refresh(@Headers() headers: Record<'authorization', string>, @Res() response: Response) {
         const { user, token: { refresh, access } } = await this.authorizationService.refresh(headers.authorization)
-        response.setCookie(process.env.COOKIE_TOKEN_NAME, refresh, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })
+        response.cookie(process.env.COOKIE_TOKEN_NAME, refresh, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })
         return {
             user,
             token: access
@@ -53,7 +53,7 @@ export class AuthorizationController {
     }
 
     @Get('logout')
-    logout(@Headers() headers: Record<'authorization', string>, @Res() response: FastifyReply) {
+    logout(@Headers() headers: Record<'authorization', string>, @Res() response: Response) {
         this.authorizationService.logout(headers.authorization)
         response.clearCookie(process.env.COOKIE_TOKEN_NAME)
     }
