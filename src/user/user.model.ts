@@ -4,6 +4,7 @@ import { UserChatRole } from 'src/user/user-chat-role.model'
 import { UserChat } from 'src/chat/user-chat.model'
 import { Privacy } from 'src/privacy/privacy.model'
 import { UserRole } from './user-role.model'
+import { Subscribe } from 'src/subscribe/subscribe.model'
 
 interface UserCreationAttributes {
     name: string
@@ -46,4 +47,10 @@ export class User extends Model<User, UserCreationAttributes> {
 
     @BelongsToMany(() => UserChatRole, () => UserRole)
     roles: UserChatRole[]
+
+    @BelongsToMany(() => User, () => Subscribe)
+    users: User[]
+
+    @BelongsToMany(() => User, () => Subscribe)
+    subscribers: User[]
 }

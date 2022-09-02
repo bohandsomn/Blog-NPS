@@ -10,6 +10,7 @@ import { SubscribeService } from './subscribe.service'
 @Module({
   controllers: [SubscribeController],
   providers: [SubscribeService],
-  imports: [SequelizeModule.forFeature([Subscribe, User]), TokenModule]
+  imports: [SequelizeModule.forFeature([Subscribe, User]), TokenModule],
+  exports: [SubscribeService]
 })
 export class SubscribeModule {}
