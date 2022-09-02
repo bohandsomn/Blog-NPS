@@ -49,6 +49,11 @@
             "has-id": "The user is already registered"
         }
     },
+    "chat": {
+        "get-one": {
+            "not-found": "Chat not found"
+        }
+    },
     "guard": {
         "authorization": {
             "unauthorized": "User not authorized"
