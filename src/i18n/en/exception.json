@@ -54,6 +54,14 @@
             "not-found": "Chat not found"
         }
     },
+    "photo-chat": {
+        "create": {
+            "has-id": "The chat is already registered"
+        },
+        "get-by-chat-id": {
+            "not-found": "Photo not found"
+        }
+    },
     "guard": {
         "authorization": {
             "unauthorized": "User not authorized"

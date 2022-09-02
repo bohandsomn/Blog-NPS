@@ -9,6 +9,7 @@ import { User } from './user.model'
 import { PrivacyService } from 'src/privacy/privacy.service'
 import { CreateUserDTO } from './DTO/create-user.dto'
 import { UserPasswordService } from './user-password.service'
+import { Chat } from 'src/chat/chat.model'
 
 @Injectable()
 export class UserService {
@@ -100,5 +101,18 @@ export class UserService {
         if (hasUser !== mustHave) {
             throw new HttpException(this.i18nService.t<string>("exception.user.login-verify.has-login"), HttpStatus.CONFLICT)
         }
+    }
+
+    async getChats(userId: number) {
+        const chats = await this.userRepository.findAll({
+            include: {model: Chat},
+            where: {id: userId}
+        })
+            .then((users) => {
+                const [user] = users
+                return user.chats
+            })
+        
+        return chats
     }
 }

@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize'
 import { I18nService } from 'nestjs-i18n'
 import { PrivacyService } from 'src/privacy/privacy.service'
 import { User } from 'src/user/user.model'
+import { UserService } from 'src/user/user.service'
 import { Chat } from './chat.model'
 import { ChatCreateDTO } from './DTO/chat-create.dto'
 import { ChatUpdateDTO } from './DTO/chat-update.dto'
@@ -13,8 +14,8 @@ export class ChatService {
     constructor(
         @InjectModel(Chat) private readonly chatRepository: typeof Chat,
         @InjectModel(UserChat) private readonly userChatRepository: typeof UserChat,
-        @InjectModel(User) private readonly userRepository: typeof User,
         private readonly privacyService: PrivacyService,
+        private readonly userService: UserService,
         private readonly i18nService: I18nService
     ) { }
 
@@ -34,16 +35,7 @@ export class ChatService {
     }
 
     async getMany(userId: number) {
-        const chats = await this.userRepository.findAll({
-            include: {model: Chat},
-            where: {id: userId}
-        })
-            .then((users) => {
-                const [user] = users
-                return user.chats
-            })
         
-        return chats
     }
 
     async update(dto: ChatUpdateDTO) {
