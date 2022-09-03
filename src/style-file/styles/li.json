@@ -1,0 +1,30 @@
+{
+    "li": {
+        "account-my-post": {
+            "display": "flex",
+            "flex-direction": "column",
+            "& > *:not(:last-child)": {
+                "margin-bottom": "20px"
+            },
+            "&:not(:last-child)": {
+                "margin-bottom": "25px"
+            }
+        },
+        "home-post": {
+            "display": "flex",
+            "flex-direction": "row",
+            "&:not(:last-child)": {
+                "margin-bottom": "25px"
+            }
+        },
+        "message": {
+            "display": "flex",
+            "align-items": "flex-start"
+        },
+        "right-message": {
+            "display": "flex",
+            "align-items": "flex-start",
+            "justify-content": "flex-end"
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "header": {
+        "main": {
+            "background": "var(--secondary-bg-color)",
+            "width": "100%"
+        },
+        "comment": {
+            "display": "flex",
+            "align-items": "center",
+            "& > *:first-child": {
+                "margin-right": "5px",
+                "cursor": "pointer"
+            }
+        },
+        "chats": {
+            "display": "flex",
+            "justify-content": "center",
+            "align-items": "center",
+            "padding": "20px 0",
+            "cursor": "pointer"
+        }
+    }
+}

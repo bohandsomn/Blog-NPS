@@ -1,0 +1,14 @@
+{
+    "section": {
+        "container": {
+            "width": "1175px",
+            "margin": "auto",
+            "& > *": {
+                "margin-top": "30px"
+            },
+            "& > *:last-child": {
+                "margin-bottom": "30px"
+            }
+        }
+    }
+}

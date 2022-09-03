@@ -1,0 +1,19 @@
+{
+    "label": {
+        "indented": {
+            "display": "flex",
+            "flex-direction": "row",
+            "align-items": "center",
+            "cursor": "pointer",
+            "& > *:first-child": {
+                "margin-right": "5px"
+            }
+        },
+        "account-personal-information": {
+            "display": "flex",
+            "& > *:first-child": {
+                "margin-right": "5px"
+            }
+        }
+    }
+}
