@@ -1,12 +1,11 @@
 import { Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript'
 import { Comment } from 'src/comment/comment.model'
-import { Post } from 'src/post/post.model'
 import { User } from 'src/user/user.model'
 
 interface LikesCommentCreationAttributes {
     userId: number
     commentId: number
-    value: boolean
+    value: boolean | null
 }
 
 @Table({tableName: 'likes_comment'})
@@ -23,6 +22,6 @@ export class LikesComment extends Model<LikesComment, LikesCommentCreationAttrib
     @Column({type: DataType.INTEGER, allowNull: false })
     commentId: number
     
-    @Column({type: DataType.BOOLEAN, allowNull: false})
+    @Column({type: DataType.BOOLEAN, allowNull: true})
     value: boolean
 }

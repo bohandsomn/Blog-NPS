@@ -1,0 +1,11 @@
+{
+    "&.light": {
+        "--main-bg-color": "#ffffff",
+        "--main-hover-color": "000000",
+        "--main-color": "#000000",
+        "--main-border-color": "#00806a",
+        "--secondary-bg-color": "#38ffcd",
+        "--button-bg-color": "linear-gradient(99.09deg, #56d8ff 37.6%, #a366ff 100%)",
+        "--img-bg-color": "#000000"
+    }
+}

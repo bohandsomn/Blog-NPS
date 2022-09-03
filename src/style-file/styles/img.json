@@ -1,0 +1,66 @@
+{
+    "img": {
+        "user-profile-preview": {
+            "width": "60px",
+            "height": "60px",
+            "border-radius": "var(--img-border-radius)",
+            "background": "var(--img-bg-color)",
+            "margin-right": "15px"
+        },
+        "account-original": {
+            "width": "200px",
+            "height": "200px",
+            "border-radius": "var(--img-border-radius)",
+            "background": "var(--img-bg-color)"
+        },
+        "additional-information-preview": {
+            "width": "60px",
+            "height": "60px",
+            "border-radius": "var(--img-border-radius)",
+            "background": "var(--img-bg-color)",
+            "margin-right": "15px"
+        },
+        "post-post": {
+            "width": "75px",
+            "height": "75px",
+            "border-radius": "var(--img-border-radius)",
+            "background": "var(--img-bg-color)",
+            "margin-right": "15px"
+        },
+        "comment-message": {
+            "width": "25px",
+            "height": "25px",
+            "border-radius": "var(--img-border-radius)",
+            "background": "var(--img-bg-color)",
+            "margin-right": "15px"
+        },
+        "user-item-preview": {
+            "width": "60px",
+            "height": "60px",
+            "border-radius": "var(--img-border-radius)",
+            "background": "var(--img-bg-color)",
+            "margin-right": "15px"
+        },
+        "chat-item-preview": {
+            "width": "60px",
+            "height": "60px",
+            "border-radius": "var(--img-border-radius)",
+            "background": "var(--img-bg-color)",
+            "margin-right": "15px"
+        },
+        "chat-item-message": {
+            "width": "25px",
+            "height": "25px",
+            "border-radius": "var(--img-border-radius)",
+            "background": "var(--img-bg-color)",
+            "margin": "20px 20px 0 0"
+        },
+        "change-photo": {
+            "width": "60px",
+            "height": "60px",
+            "border-radius": "var(--img-border-radius)",
+            "background": "var(--img-bg-color)",
+            "margin-right": "20px"
+        }
+    }
+}

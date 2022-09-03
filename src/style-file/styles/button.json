@@ -1,0 +1,25 @@
+{
+    "button": {
+        "linear": {
+            "font-weight": "bold",
+            "padding": "10px 25px",
+            "background": "var(--button-bg-color)",
+            "border-radius": "var(--main-border-radius)",
+            "border": "none",
+            "cursor": "pointer"
+        },
+        "plain": {
+            "font-weight": "bold",
+            "background": "none",
+            "border": "none",
+            "cursor": "pointer"
+        },
+        "ellipsis": {
+            "width": "20px",
+            "height": "20px",
+            "background": "none",
+            "border": "none",
+            "cursor": "pointer"
+        }
+    }
+}

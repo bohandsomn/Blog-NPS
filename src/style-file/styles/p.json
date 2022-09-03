@@ -1,0 +1,40 @@
+{
+    "p": {
+        "wrap-anywhere": {
+            "overflow-wrap": "anywhere"
+        },
+        "posts-post-time": {
+            "font-style": "italic",
+            "margin-top": "10px"
+        },
+        "account-photo-constructor": {
+            "padding": "5px",
+            "background": "var(--main-bg-color)",
+            "border-radius": "var(--main-border-radius)",
+            "cursor": "pointer"
+        },
+        "account-personal-information": {
+            "font-weight": "bold",
+            "text-transform": "uppercase"
+        },
+        "post-updater-button": {
+            "text-decoration": "underline",
+            "cursor": "pointer"
+        },
+        "comment-content-inscription": {
+            "font-weight": "bold",
+            "cursor": "pointer"
+        },
+        "not-found-description": {
+            "font-weight": "bold"
+        },
+        "ellipsis": {
+            "white-space": "nowrap",
+            "overflow": "hidden",
+            "text-overflow": "ellipsis"
+        },
+        "message": {
+            "overflow-wrap": "break-word"
+        }
+    }
+}
