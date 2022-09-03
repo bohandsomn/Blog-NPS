@@ -72,6 +72,11 @@
             "not-found": "Post not found"
         }
     },
+    "comment": {
+        "verify": {
+            "not-found": "Comment not found"
+        }
+    },
     "guard": {
         "authorization": {
             "unauthorized": "User not authorized"
