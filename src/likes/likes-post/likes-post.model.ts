@@ -5,7 +5,7 @@ import { User } from 'src/user/user.model'
 interface LikesPostCreationAttributes {
     userId: number
     postId: number
-    value: boolean
+    value: boolean | null
 }
 
 @Table({tableName: 'likes_post'})
@@ -22,6 +22,6 @@ export class LikesPost extends Model<LikesPost, LikesPostCreationAttributes> {
     @Column({type: DataType.INTEGER, allowNull: false })
     postId: number
     
-    @Column({type: DataType.BOOLEAN, allowNull: false})
+    @Column({type: DataType.BOOLEAN, allowNull: true })
     value: boolean
 }
