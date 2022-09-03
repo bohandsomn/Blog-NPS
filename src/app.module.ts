@@ -33,9 +33,10 @@ import { Post } from './post/post.model'
 import { Comment } from './comment/comment.model'
 import { LikesComment } from './likes/likes-comment/likes-comment.model'
 import { LikesPost } from './likes/likes-post/likes-post.model'
-import { UserChatRole } from './user/user-chat-role.model'
-import { UserRole } from './user/user-role.model'
+import { UserChatRole } from './user-chat-role/user-chat-role.model'
+import { UserRole } from './user-chat-role/user-role.model'
 import { MailModule } from './mail/mail.module'
+import { UserChatRoleModule } from './user-chat-role/user-chat-role.module';
 @Module({
   imports: [
     AuthorizationModule, 
@@ -85,7 +86,8 @@ import { MailModule } from './mail/mail.module'
           rejectUnauthorized: false
         }
       }
-    })
+    }),
+    UserChatRoleModule
   ]
 })
 export class AppModule {}

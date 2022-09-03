@@ -62,6 +62,11 @@
             "not-found": "Photo not found"
         }
     },
+    "user-chat-role": {
+        "verify": {
+            "has-value": "The role is already registered"
+        }
+    },
     "guard": {
         "authorization": {
             "unauthorized": "User not authorized"
