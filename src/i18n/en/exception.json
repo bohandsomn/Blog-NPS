@@ -67,6 +67,11 @@
             "has-value": "The role is already registered"
         }
     },
+    "post": {
+        "verify": {
+            "not-found": "Post not found"
+        }
+    },
     "guard": {
         "authorization": {
             "unauthorized": "User not authorized"
