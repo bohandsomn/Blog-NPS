@@ -1,9 +1,9 @@
 import { BelongsToMany, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript'
 import { Chat } from 'src/chat/chat.model'
-import { UserChatRole } from 'src/user/user-chat-role.model'
+import { UserChatRole } from 'src/user-chat-role/user-chat-role.model'
 import { UserChat } from 'src/chat/user-chat.model'
 import { Privacy } from 'src/privacy/privacy.model'
-import { UserRole } from './user-role.model'
+import { UserRole } from '../user-chat-role/user-role.model'
 import { Subscribe } from 'src/subscribe/subscribe.model'
 
 interface UserCreationAttributes {

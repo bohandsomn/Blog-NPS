@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { I18nService } from 'nestjs-i18n'
 import { PrivacyService } from 'src/privacy/privacy.service'
+import { UserChatRoleService } from 'src/user-chat-role/user-chat-role.service'
 import { User } from 'src/user/user.model'
 import { UserService } from 'src/user/user.service'
 import { Chat } from './chat.model'
@@ -16,12 +17,14 @@ export class ChatService {
         @InjectModel(UserChat) private readonly userChatRepository: typeof UserChat,
         private readonly privacyService: PrivacyService,
         private readonly userService: UserService,
+        private readonly userChatRoleService: UserChatRoleService,
         private readonly i18nService: I18nService
     ) { }
 
     async create(dto: ChatCreateDTO & {userId: number}) {
         const privacy = await this.privacyService.getByValue('PRIVATE')
         const chat = await this.chatRepository.create({name: dto.name, privacyId: privacy.id})
+        await this.userChatRoleService.addRoleToUser(dto.userId)
         await this.addUserToChat(dto.userId, chat.id)
         return chat
     }
@@ -35,7 +38,7 @@ export class ChatService {
     }
 
     async getMany(userId: number) {
-        
+        return this.userService.getChats(userId)
     }
 
     async update(dto: ChatUpdateDTO) {
