@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Headers, Param, Post, Redirect, Req, Res, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, Headers, Param, Post, Redirect, Req, Res, UseGuards, UsePipes } from '@nestjs/common'
 import { Response } from 'express'
+import { ValidationPipe } from 'src/validation/validation.pipe'
 import { AuthorizationGuard, RequestUser } from './authorization.guard'
 import { AuthorizationService } from './authorization.service'
 import { LoginAuthorizationDTO } from './DTO/login-authorization.dto'
@@ -12,6 +13,7 @@ export class AuthorizationController {
     ) { }
 
     @Post('registration')
+    @UsePipes(ValidationPipe)
     async registration(@Body() dto: RegistrationAuthorizationDTO, @Res({ passthrough: true }) response: Response) {
         const { user, token: { refresh, access } } = await this.authorizationService.registration(dto)
         response.cookie(process.env.COOKIE_TOKEN_NAME, refresh, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })
@@ -22,6 +24,7 @@ export class AuthorizationController {
     }
 
     @Post('login')
+    @UsePipes(ValidationPipe)
     async login(@Body() dto: LoginAuthorizationDTO, @Res({ passthrough: true }) response: Response) {
         const { user, token: { refresh, access } } = await this.authorizationService.login(dto)
         response.cookie(process.env.COOKIE_TOKEN_NAME, refresh, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })

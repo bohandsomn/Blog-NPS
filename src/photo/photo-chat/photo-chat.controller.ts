@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res, UploadedFile, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { Response } from 'express'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { ValidationPipe } from 'src/validation/validation.pipe'
 import { PhotoResizePipe } from '../transformation/photo-resize.pipe'
 import { PhotoChatCreateBodyDTO } from './DTO/photo-chat-create.dto'
 import { PhotoChatUpdateBodyDTO } from './DTO/photo-chat-update.dto'
@@ -23,6 +24,7 @@ export class PhotoChatController {
     @Post()
     @UseGuards(AuthorizationGuard)
     @UseInterceptors(FileInterceptor('file'))
+    @UsePipes(ValidationPipe)
     create(
         @UploadedFile(new PhotoResizePipe(['preview'])) filePaths: Awaited<ReturnType<PhotoResizePipe['transform']>>,
         @Body() dto: PhotoChatCreateBodyDTO
@@ -33,6 +35,7 @@ export class PhotoChatController {
     @Put()
     @UseGuards(AuthorizationGuard)
     @UseInterceptors(FileInterceptor('file'))
+    @UsePipes(ValidationPipe)
     update(
         @UploadedFile(new PhotoResizePipe(['original', 'post', 'preview', 'message'])) filePaths: Awaited<ReturnType<PhotoResizePipe['transform']>>,
         @Body() dto: PhotoChatUpdateBodyDTO

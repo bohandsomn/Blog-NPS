@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards, UsePipes } from '@nestjs/common'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { ValidationPipe } from 'src/validation/validation.pipe'
 import { ChatService } from './chat.service'
 import { ChatCreateDTO } from './DTO/chat-create.dto'
 import { ChatUpdateDTO } from './DTO/chat-update.dto'
@@ -11,6 +12,7 @@ export class ChatController {
     ) { }
     
     @Post()
+    @UsePipes(ValidationPipe)
     @UseGuards(AuthorizationGuard)
     create(@Req() request: RequestUser, @Body() dto: ChatCreateDTO) {
         return this.chatService.create({...dto, userId: request.user.id})
@@ -29,6 +31,7 @@ export class ChatController {
     }
 
     @Put()
+    @UsePipes(ValidationPipe)
     @UseGuards(AuthorizationGuard)
     update(@Body() dto: ChatUpdateDTO) {
         return this.chatService.update(dto)

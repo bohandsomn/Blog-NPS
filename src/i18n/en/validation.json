@@ -1,0 +1,187 @@
+{
+    "authorization": {
+        "login": {
+            "login": {
+                "is-string": "Login must be a string",
+                "is-lowercase": "Login must be in lowercase"
+            },
+            "password": {
+                "is-string": "Password must be a string",
+                "lenght": "Password length must be between 4 and 10 characters"
+            }
+        },
+        "registration": {
+            "name": {
+                "is-string": "Name must be a string"
+            },
+            "email": {
+                "is-email": "Email must be a email"
+            },
+            "login": {
+                "is-string": "Login must be a string",
+                "is-lowercase": "Login must be in lowercase"
+            },
+            "password": {
+                "is-string": "Password must be a string",
+                "lenght": "Password length must be between 4 and 10 characters"
+            }
+        }
+    },
+    "chat": {
+        "create": {
+            "name": {
+                "is-string": "Name must be a string"
+            }
+        },
+        "update": {
+            "id": {
+                "is-number": "Id must be a number"
+            },
+            "name": {
+                "is-string": "Name must be a string"
+            },
+            "privacy": {
+                "is-string": "Privacy must be a string"
+            }
+        }
+    },
+    "comment": {
+        "create": {
+            "content": {
+                "is-string": "Content must be a string"
+            },
+            "post-id": {
+                "is-string": "Post's id must be a string"
+            }
+        },
+        "update": {
+            "content": {
+                "is-string": "Content must be a string"
+            },
+            "post-id": {
+                "is-string": "Post's id must be a string"
+            }
+        }
+    },
+    "message": {
+        "connect": {
+            "chat-id": {
+                "is-number": "Id must be a number"
+            }
+        },
+        "create": {
+            "chat-id": {
+                "is-number": "Id must be a number"
+            },
+            "user-id": {
+                "is-number": "Id must be a number"
+            },
+            "content": {
+                "is-string": "Content must be a string"
+            }
+        }
+    },
+    "photo": {
+        "chat": {
+            "create": {
+                "chat-id": {
+                    "is-number": "Id must be a number"
+                }
+            },
+            "update": {
+                "chat-id": {
+                    "is-number": "Id must be a number"
+                }
+            }
+        }
+    },
+    "post": {
+        "create": {
+            "title": {
+                "is-string": "Title must be a string",
+                "is-defined": "Title must be defined"
+            },
+            "content": {
+                "is-string": "Content must be a string",
+                "is-defined": "Content must be defined"
+            },
+            "privacy": {
+                "is-string": "Privacy must be a string",
+                "is-defined": "Privacy must be defined"
+            }
+        },
+        "get-many": {
+            "title": {
+                "is-string": "Title must be a string",
+                "is-defined": "Title must be defined"
+            },
+            "content": {
+                "is-string": "Content must be a string",
+                "is-defined": "Content must be defined"
+            },
+            "privacy": {
+                "is-string": "Privacy must be a string",
+                "is-defined": "Privacy must be defined"
+            },
+            "page": {
+                "is-string": "Page must be a string",
+                "is-defined": "Page must be defined"
+            }
+        },
+        "update": {
+            "post-id": {
+                "is-string": "Post's id must be a string",
+                "is-defined": "Post's id must be defined"
+            },
+            "title": {
+                "is-string": "Title must be a string",
+                "is-defined": "Title must be defined"
+            },
+            "content": {
+                "is-string": "Content must be a string",
+                "is-defined": "Content must be defined"
+            },
+            "privacy": {
+                "is-string": "Privacy must be a string",
+                "is-defined": "Privacy must be defined"
+            }
+        }
+    },
+    "privacy": {
+        "create": {
+            "value": {
+                "is-string": "Privacy must be a string",
+                "is-defined": "Privacy must be defined"
+            }
+        }
+    },
+    "user": {
+        "update": {
+            "name": {
+                "is-string": "Name must be a string"
+            },
+            "surname": {
+                "is-defined": "Surname must be defined"
+            },
+            "email": {
+                "is-email": "Email must be a email"
+            },
+            "login": {
+                "is-string": "Login must be a string"
+            },
+            "birthday": {
+                "is-defined": "Birthday must be defined"
+            },
+            "privacy": {
+                "is-string": "Privacy must be a string"
+            }
+        }
+    },
+    "user-chat-role": {
+        "create": {
+            "value": {
+                "is-string": "Role must be a string"
+            }
+        }
+    }
+}
