@@ -1,0 +1,85 @@
+{
+    "user": {
+        "update": {
+            "not-found": "Користувача не знайдено"
+        },
+        "email-verify": {
+            "has-email": "Користувач із цією електронною адресою вже зареєстрований"
+        },
+        "login-verify": {
+            "has-login": "Користувач із таким логіном уже зареєстрований"
+        },
+        "id-verify": {
+            "has-id": "Користувача не знайдено"
+        }
+    },
+    "activation": {
+        "activate": {
+            "not-found": "Користувача не знайдено"
+        },
+        "get-by-id": {
+            "not-found": "Користувача не знайдено"
+        }
+    },
+    "authorization": {
+        "login": {
+            "invalid-password": "Недійсний пароль"
+        }
+    },
+    "token": {
+        "refresh": {
+            "empty-token": "Користувач не авторизований"
+        },
+        "split": {
+            "unauthorized": "Користувач не авторизований"
+        }
+    },
+    "privacy": {
+        "verify": {
+            "entry-exists": "Запис у базі даних уже існує"
+        }
+    },
+    "file": {
+        "create": {
+            "something-went-wrong": "Під час завантаження файлу сталася помилка"
+        }
+    },
+    "photo-user": {
+        "create": {
+            "has-id": "Користувач вже зареєстрований"
+        }
+    },
+    "chat": {
+        "get-one": {
+            "not-found": "Чат не знайдено"
+        }
+    },
+    "photo-chat": {
+        "create": {
+            "has-id": "Чат вже зареєстрований"
+        },
+        "get-by-chat-id": {
+            "not-found": "Фото не знайдено"
+        }
+    },
+    "user-chat-role": {
+        "verify": {
+            "has-value": "Роль вже зареєстрована"
+        }
+    },
+    "post": {
+        "verify": {
+            "not-found": "Повідомлення не знайдено"
+        }
+    },
+    "comment": {
+        "verify": {
+            "not-found": "Коментар не знайдено"
+        }
+    },
+    "guard": {
+        "authorization": {
+            "unauthorized": "Користувач не авторизований"
+        }
+    }
+}

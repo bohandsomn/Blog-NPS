@@ -71,6 +71,11 @@ import { StyleFileModule } from './style-file/style-file.module'
     }),
     I18nModule.forRoot({
       fallbackLanguage: 'en',
+      fallbacks: {
+        'en-*': 'en',
+        'ua-*': 'ua',
+        'ru-*': 'ru',
+      },
       loaderOptions: {
         path: path.join(__dirname, '/i18n/'),
         watch: true,
