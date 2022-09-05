@@ -36,8 +36,8 @@ import { LikesPost } from './likes/likes-post/likes-post.model'
 import { UserChatRole } from './user-chat-role/user-chat-role.model'
 import { UserRole } from './user-chat-role/user-role.model'
 import { MailModule } from './mail/mail.module'
-import { UserChatRoleModule } from './user-chat-role/user-chat-role.module';
-import { StyleFileModule } from './style-file/style-file.module';
+import { UserChatRoleModule } from './user-chat-role/user-chat-role.module'
+import { StyleFileModule } from './style-file/style-file.module'
 @Module({
   imports: [
     AuthorizationModule, 
@@ -57,6 +57,8 @@ import { StyleFileModule } from './style-file/style-file.module';
     ConfigModule.forRoot({
       envFilePath: `.${process.env.NODE_ENV}.env`
     }),
+    UserChatRoleModule,
+    StyleFileModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: process.env.POSTGRES_HOST,
@@ -87,9 +89,7 @@ import { StyleFileModule } from './style-file/style-file.module';
           rejectUnauthorized: false
         }
       }
-    }),
-    UserChatRoleModule,
-    StyleFileModule
+    })
   ]
 })
 export class AppModule {}
