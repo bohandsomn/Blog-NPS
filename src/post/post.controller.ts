@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards, UsePipes } from '@nestjs/common'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { ValidationPipe } from 'src/validation/validation.pipe'
 import { PostCreateDTO } from './DTO/post-create.dto'
 import { PostGetManyDTO } from './DTO/post-get-many.dto'
 import { PostUpdateDTO } from './DTO/post-update.dto'
@@ -17,30 +18,21 @@ export class PostController {
     }
 
     @Get()
-    getMany(
-        @Query('title') title: string,
-        @Query('content') content: string,
-        @Query('privacy') privacy: string,
-        @Query('page') page: string,
-    ) {
-        const query = {
-            title,
-            content,
-            privacy,
-            page,
-        }
-        console.log(query)
+    @UsePipes(ValidationPipe)
+    getMany(@Query() query: PostGetManyDTO) {
         return this.postService.getMany(query)
     }
 
     @Post()
     @UseGuards(AuthorizationGuard)
+    @UsePipes(ValidationPipe)
     create(@Req() request: RequestUser, @Body() dto: PostCreateDTO) {
         return this.postService.create({...dto, userId: request.user.id})
     }
 
     @Put()
     @UseGuards(AuthorizationGuard)
+    @UsePipes(ValidationPipe)
     update(@Body() dto: PostUpdateDTO) {
         return this.postService.update(dto)
     }

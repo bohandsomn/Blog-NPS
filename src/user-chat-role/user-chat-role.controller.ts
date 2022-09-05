@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, UseGuards, UsePipes } from '@nestjs/common'
 import { AuthorizationGuard } from 'src/authorization/authorization.guard'
+import { ValidationPipe } from 'src/validation/validation.pipe'
 import { UserChatRoleCreateDTO } from './DTO/user-chat-role-create.dto'
 import { UserChatRoleService } from './user-chat-role.service'
 
@@ -11,6 +12,7 @@ export class UserChatRoleController {
 
     @Post()
     @UseGuards(AuthorizationGuard)
+    @UsePipes(ValidationPipe)
     create(@Body() dto: UserChatRoleCreateDTO) {
         return this.userChatRoleService.create(dto)
     }

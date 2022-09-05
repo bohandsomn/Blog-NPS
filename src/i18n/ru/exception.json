@@ -1,0 +1,85 @@
+{
+    "user": {
+        "update": {
+            "not-found": "Пользователя не найдено"
+        },
+        "email-verify": {
+            "has-email": "Пользователь с этим электронным адресом уже зарегистрирован"
+        },
+        "login-verify": {
+            "has-login": "Пользователь с таким логином уже зарегистрирован"
+        },
+        "id-verify": {
+            "has-id": "Пользователя не найдено"
+        }
+    },
+    "activation": {
+        "activate": {
+            "not-found": "Пользователя не найдено"
+        },
+        "get-by-id": {
+            "not-found": "Пользователя не найдено"
+        }
+    },
+    "authorization": {
+        "login": {
+            "invalid-password": "Недействительный пароль"
+        }
+    },
+    "token": {
+        "refresh": {
+            "empty-token": "Пользователь не авторизован"
+        },
+        "split": {
+            "unauthorized": "Пользователь не авторизован"
+        }
+    },
+    "privacy": {
+        "verify": {
+            "entry-exists": "Запись в базе данных уже существует"
+        }
+    },
+    "file": {
+        "create": {
+            "something-went-wrong": "При загрузке файла произошла ошибка"
+        }
+    },
+    "photo-user": {
+        "create": {
+            "has-id": "Пользователь уже зарегистрирован"
+        }
+    },
+    "chat": {
+        "get-one": {
+            "not-found": "Чат не найден"
+        }
+    },
+    "photo-chat": {
+        "create": {
+            "has-id": "Чат уже зарегистрирован"
+        },
+        "get-by-chat-id": {
+            "not-found": "Фото не найдено"
+        }
+    },
+    "user-chat-role": {
+        "verify": {
+            "has-value": "Роль уже зарегистрирована"
+        }
+    },
+    "post": {
+        "verify": {
+            "not-found": "Сообщение не найдено"
+        }
+    },
+    "comment": {
+        "verify": {
+            "not-found": "Комментарий не найден"
+        }
+    },
+    "guard": {
+        "authorization": {
+            "unauthorized": "Пользователь не авторизован"
+        }
+    }
+}
