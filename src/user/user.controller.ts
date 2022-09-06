@@ -1,21 +1,28 @@
 import { Body, Controller, Get, Put, Query, Req, UseGuards, UsePipes } from '@nestjs/common'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 
 import { UpdateUserDTO } from './DTO/update-user.dto'
+import { User } from './user.model'
 import { UserService } from './user.service'
 
+@ApiTags('User')
 @Controller('user')
 export class UserController {
     constructor(
         private readonly userService: UserService
     ) { }
 
+    @ApiOperation({summary: 'Receiving a users preview'})
+    @ApiResponse({status: 200, type: [User]})
     @Get('/preview')
     getPreview(@Query('fullname') fullname: string) {
         return this.userService.getPreview(fullname)
     }
 
+    @ApiOperation({summary: 'User update'})
+    @ApiResponse({status: 200, type: User})
     @Put()
     @UseGuards(AuthorizationGuard)
     @UsePipes(ValidationPipe)
