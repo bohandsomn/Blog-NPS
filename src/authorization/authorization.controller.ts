@@ -1,17 +1,21 @@
 import { Body, Controller, Get, Headers, Param, Post, Redirect, Req, Res, UseGuards, UsePipes } from '@nestjs/common'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
+import { User } from 'src/user/user.model'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { AuthorizationGuard, RequestUser } from './authorization.guard'
 import { AuthorizationService } from './authorization.service'
 import { LoginAuthorizationDTO } from './DTO/login-authorization.dto'
 import { RegistrationAuthorizationDTO } from './DTO/registration-authorization.dto'
 
+@ApiTags('Authorization')
 @Controller('authorization')
 export class AuthorizationController {
     constructor(
         private readonly authorizationService: AuthorizationService
     ) { }
 
+    @ApiOperation({summary: 'User registration'})
     @Post('registration')
     @UsePipes(ValidationPipe)
     async registration(@Body() dto: RegistrationAuthorizationDTO, @Res({ passthrough: true }) response: Response) {
@@ -23,6 +27,7 @@ export class AuthorizationController {
         }
     }
 
+    @ApiOperation({summary: 'User login'})
     @Post('login')
     @UsePipes(ValidationPipe)
     async login(@Body() dto: LoginAuthorizationDTO, @Res({ passthrough: true }) response: Response) {
@@ -34,6 +39,7 @@ export class AuthorizationController {
         }
     }
 
+    @ApiOperation({summary: 'User auto-login'})
     @Get('auto-login')
     @UseGuards(AuthorizationGuard)
     async autoLogin(@Req() request: RequestUser, @Res() response: Response) {
@@ -45,6 +51,7 @@ export class AuthorizationController {
         }
     }
 
+    @ApiOperation({summary: 'Token refresh'})
     @Get('refresh')
     async refresh(@Headers() headers: Record<'authorization', string>, @Res() response: Response) {
         const { user, token: { refresh, access } } = await this.authorizationService.refresh(headers.authorization)
@@ -55,12 +62,14 @@ export class AuthorizationController {
         }
     }
 
+    @ApiOperation({summary: 'User logout'})
     @Get('logout')
     logout(@Headers() headers: Record<'authorization', string>, @Res() response: Response) {
         this.authorizationService.logout(headers.authorization)
         response.clearCookie(process.env.COOKIE_TOKEN_NAME)
     }
 
+    @ApiOperation({summary: 'User activation'})
     @Get('activation/:userId')
     @Redirect(process.env.CLIENT_URL)
     activation(@Param('userId') userId: string) {

@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res, UploadedFile, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
 import { ValidationPipe } from 'src/validation/validation.pipe'
@@ -8,12 +9,14 @@ import { PhotoChatCreateBodyDTO } from './DTO/photo-chat-create.dto'
 import { PhotoChatUpdateBodyDTO } from './DTO/photo-chat-update.dto'
 import { PhotoChatService } from './photo-chat.service'
 
+@ApiTags('Chat\'s photo')
 @Controller('photo/chat')
 export class PhotoChatController {
     constructor(
         private readonly photoChatService: PhotoChatService
     ) { }
 
+    @ApiOperation({summary: 'Receiving a photo preview'})
     @Get('/:chatId')
     @UseGuards(AuthorizationGuard)
     async getPreview(@Param('chatId') chatId: string, @Res() response: Response) {
@@ -21,6 +24,7 @@ export class PhotoChatController {
         return stream.pipe(response)
     }
 
+    @ApiOperation({summary: 'Photo creation'})
     @Post()
     @UseGuards(AuthorizationGuard)
     @UseInterceptors(FileInterceptor('file'))
@@ -32,6 +36,7 @@ export class PhotoChatController {
         return this.photoChatService.create({...dto, ...filePaths})
     }
 
+    @ApiOperation({summary: 'Photo update'})
     @Put()
     @UseGuards(AuthorizationGuard)
     @UseInterceptors(FileInterceptor('file'))
@@ -43,6 +48,7 @@ export class PhotoChatController {
         return this.photoChatService.update({...dto, ...filePaths})
     }
 
+    @ApiOperation({summary: 'Deleting a photo'})
     @Delete('/:chatId')
     @UseGuards(AuthorizationGuard)
     delete(@Param('chatId') chatId: string, @Req() request: RequestUser) {

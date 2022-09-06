@@ -1,11 +1,14 @@
 import { UsePipes } from '@nestjs/common'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets'
 import { Socket, Server } from 'socket.io'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { MessageConnectDTO } from './DTO/message-connect.dto'
 import { MessageCreateDTO } from './DTO/message-create.dto'
+import { Message } from './message.model'
 import { MessageService } from './message.service'
 
+@ApiTags('Message')
 @WebSocketGateway()
 export class MessageGateway {
     constructor(
@@ -14,6 +17,8 @@ export class MessageGateway {
     
     @WebSocketServer() private readonly server: Server
 
+    @ApiOperation({summary: 'Sending message'})
+    @ApiResponse({status: 200, type: Message})
     @SubscribeMessage('message')
     @UsePipes(ValidationPipe)
     async handleMessage(@MessageBody() dto: MessageCreateDTO) {
@@ -21,12 +26,14 @@ export class MessageGateway {
         this.server.to(dto.chatId.toString()).emit('message', message)
     }
 
+    @ApiOperation({summary: 'Join to chat room'})
     @SubscribeMessage('join-room')
     @UsePipes(ValidationPipe)
     handleRoomJoin(client: Socket, dto: MessageConnectDTO) {
         client.join(dto.chatId.toString())
     }
-  
+
+    @ApiOperation({summary: 'Leave from chat room'})
     @SubscribeMessage('leave-room')
     @UsePipes(ValidationPipe)
     handleRoomLeave(client: Socket, dto: MessageConnectDTO) {
