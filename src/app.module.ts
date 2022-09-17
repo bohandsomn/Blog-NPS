@@ -67,7 +67,10 @@ import { StyleFileModule } from './style-file/style-file.module'
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       models: [User, Privacy, PhotoUser, Activation, Token, Subscribe, Chat, UserChat, PhotoChat, Message, Post, Comment, LikesComment, LikesPost, UserChatRole, UserRole],
-      autoLoadModels: true
+      autoLoadModels: true,
+      dialectOptions: {
+        ssl: { rejectUnauthorized: false }
+      }
     }),
     I18nModule.forRoot({
       fallbackLanguage: 'en',
