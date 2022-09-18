@@ -56,7 +56,7 @@ import { StyleFileModule } from './style-file/style-file.module'
     MessageModule,
     MailModule,
     ConfigModule.forRoot({
-      envFilePath: `.${process.env.NODE_ENV || 'production'}.env`
+      envFilePath: `.${process.env.NODE_ENV}.env`
     }),
     UserChatRoleModule,
     StyleFileModule,
