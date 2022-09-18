@@ -1,1 +1,1 @@
-web: npm run start:prod
+web: npm install pg pg-hstore && npm run start:prod
