@@ -57,7 +57,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
     MessageModule,
     MailModule,
     ConfigModule.forRoot({
-      envFilePath: `.${process.env.NODE_ENV}.env`
+      envFilePath: `.${process.env.NODE_ENV || 'production'}.env`
     }),
     UserChatRoleModule,
     StyleFileModule,
