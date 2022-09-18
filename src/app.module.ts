@@ -38,11 +38,7 @@ import { UserRole } from './user-chat-role/user-role.model'
 import { MailModule } from './mail/mail.module'
 import { UserChatRoleModule } from './user-chat-role/user-chat-role.module'
 import { StyleFileModule } from './style-file/style-file.module'
-
-function logger<Data>(data: Data) {
-  console.log(data)
-  return data
-}
+import { TypeOrmModule } from '@nestjs/typeorm'
 
 @Module({
   imports: [
@@ -65,13 +61,23 @@ function logger<Data>(data: Data) {
     }),
     UserChatRoleModule,
     StyleFileModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.POSTGRES_HOST,
+      port: parseInt(process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
+      synchronize: true,
+      entities: [User, Privacy, PhotoUser, Activation, Token, Subscribe, Chat, UserChat, PhotoChat, Message, Post, Comment, LikesComment, LikesPost, UserChatRole, UserRole]
+    }),
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: logger(process.env.POSTGRES_HOST),
-      port: logger(parseInt(process.env.POSTGRES_PORT)),
-      username: logger(process.env.POSTGRES_USER),
-      password: logger(process.env.POSTGRES_PASSWORD),
-      database: logger(process.env.POSTGRES_DB),
+      host: process.env.POSTGRES_HOST,
+      port: parseInt(process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
       models: [User, Privacy, PhotoUser, Activation, Token, Subscribe, Chat, UserChat, PhotoChat, Message, Post, Comment, LikesComment, LikesPost, UserChatRole, UserRole],
       autoLoadModels: true
     }),
