@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common'
 import { SequelizeModule } from '@nestjs/sequelize'
-import { ConfigModule } from '@nestjs/config'
 import * as path from 'path'
 import { I18nModule } from 'nestjs-i18n'
 import { MailerModule } from '@nestjs-modules/mailer'
@@ -56,9 +55,6 @@ import { TypeOrmModule } from '@nestjs/typeorm'
     ActivationModule,
     MessageModule,
     MailModule,
-    ConfigModule.forRoot({
-      envFilePath: `.${process.env.NODE_ENV || 'production'}.env`
-    }),
     UserChatRoleModule,
     StyleFileModule,
     TypeOrmModule.forRoot({
