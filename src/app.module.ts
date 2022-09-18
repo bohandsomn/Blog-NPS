@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { SequelizeModule } from '@nestjs/sequelize'
+// import { ConfigModule } from '@nestjs/config'
 import * as path from 'path'
 import { I18nModule } from 'nestjs-i18n'
 import { MailerModule } from '@nestjs-modules/mailer'
@@ -14,7 +15,6 @@ import { StyleModule } from './style/style.module'
 import { UserModule } from './user/user.module'
 import { FriendshipsModule } from './friendships/friendships.module'
 import { SubscribeModule } from './subscribe/subscribe.module'
-import { ConfigModule } from '@nestjs/config'
 import { PrivacyModule } from './privacy/privacy.module'
 import { ActivationModule } from './activation/activation.module'
 import { MessageModule } from './message/message.module'
@@ -56,9 +56,6 @@ import { TypeOrmModule } from '@nestjs/typeorm'
     ActivationModule,
     MessageModule,
     MailModule,
-    ConfigModule.forRoot({
-      envFilePath: `.${process.env.NODE_ENV}.env`
-    }),
     UserChatRoleModule,
     StyleFileModule,
     TypeOrmModule.forRoot({
