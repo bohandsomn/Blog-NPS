@@ -85,7 +85,7 @@ import { StyleFileModule } from './style-file/style-file.module'
         'ru-*': 'ru',
       },
       loaderOptions: {
-        path: path.join(__dirname, '/i18n/'),
+        path: path.join(path.resolve(), '/i18n/'),
         watch: true,
       },
     }),
