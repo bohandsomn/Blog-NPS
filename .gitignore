@@ -4,7 +4,6 @@
 .production.env
 .development.env
 package-lock.json
-nest-cli.json
 
 # Logs
 logs
