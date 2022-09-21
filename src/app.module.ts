@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { SequelizeModule } from '@nestjs/sequelize'
+import { ConfigModule } from '@nestjs/config'
 import * as path from 'path'
 import { I18nModule } from 'nestjs-i18n'
 import { MailerModule } from '@nestjs-modules/mailer'
@@ -14,7 +15,6 @@ import { StyleModule } from './style/style.module'
 import { UserModule } from './user/user.module'
 import { FriendshipsModule } from './friendships/friendships.module'
 import { SubscribeModule } from './subscribe/subscribe.module'
-import { ConfigModule } from '@nestjs/config'
 import { PrivacyModule } from './privacy/privacy.module'
 import { ActivationModule } from './activation/activation.module'
 import { MessageModule } from './message/message.module'
@@ -38,6 +38,7 @@ import { UserRole } from './user-chat-role/user-role.model'
 import { MailModule } from './mail/mail.module'
 import { UserChatRoleModule } from './user-chat-role/user-chat-role.module'
 import { StyleFileModule } from './style-file/style-file.module'
+
 @Module({
   imports: [
     AuthorizationModule, 
@@ -67,7 +68,14 @@ import { StyleFileModule } from './style-file/style-file.module'
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       models: [User, Privacy, PhotoUser, Activation, Token, Subscribe, Chat, UserChat, PhotoChat, Message, Post, Comment, LikesComment, LikesPost, UserChatRole, UserRole],
-      autoLoadModels: true
+      autoLoadModels: true,
+      ...(process.env.NODE_ENV === 'production' && {
+        dialectOptions: {
+          ssl: {
+            rejectUnauthorized: false
+          }
+        }
+      })
     }),
     I18nModule.forRoot({
       fallbackLanguage: 'en',
