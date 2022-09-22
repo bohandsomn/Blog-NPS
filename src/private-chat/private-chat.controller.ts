@@ -1,5 +1,7 @@
-import { Controller, Delete, Get, Patch, Post, UseGuards } from '@nestjs/common'
-import { AuthorizationGuard } from 'src/authorization/authorization.guard'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common'
+import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { PrivateChatCreateBodyDTO } from './DTO/private-chat-create.dto'
+import { PrivateChatUpdateBodyDTO } from './DTO/private-chat-update.dto'
 import { PrivateChatService } from './private-chat.service'
 
 @Controller('private-chat')
@@ -10,17 +12,25 @@ export class PrivateChatController {
 
     @Post()
     @UseGuards(AuthorizationGuard)
-    create() { }
+    create(@Req() request: RequestUser, @Body() dto: PrivateChatCreateBodyDTO) {
+        return this.privateChatService.create({...dto, userId: request.user.id})
+    }
 
-    @Get()
+    @Get('/:id')
     @UseGuards(AuthorizationGuard)
-    getOne() { }
+    getOne(@Req() request: RequestUser, @Param('id') id: string) {
+        return this.privateChatService.getOne({id: parseInt(id), userId: request.user.id})
+    }
 
     @Patch()
     @UseGuards(AuthorizationGuard)
-    update() { }
+    update(@Req() request: RequestUser, @Body() dto: PrivateChatUpdateBodyDTO) {
+        return this.privateChatService.update({...dto, userId: request.user.id})
+    }
 
-    @Delete() 
+    @Delete('/:id') 
     @UseGuards(AuthorizationGuard)
-    delete() { }
+    delete(@Req() request: RequestUser, @Param('id') id: string) {
+        return this.privateChatService.delete({id: parseInt(id), userId: request.user.id})
+    }
 }
