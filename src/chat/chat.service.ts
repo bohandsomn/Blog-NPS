@@ -55,7 +55,7 @@ export class ChatService {
         return this.chatRepository.destroy({where: {id}})
     }
 
-    private async addUserToChat(userId: number, chatId: number) {
+    async addUserToChat(userId: number, chatId: number) {
         await this.userChatRepository.create({
             userId: userId,
             chatId: chatId

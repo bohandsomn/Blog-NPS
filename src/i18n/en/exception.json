@@ -77,6 +77,11 @@
             "not-found": "Comment not found"
         }
     },
+    "private-chat": {
+        "verify": {
+            "not-access": "Access to the chat is forbidden"
+        }
+    },
     "guard": {
         "authorization": {
             "unauthorized": "User not authorized"
