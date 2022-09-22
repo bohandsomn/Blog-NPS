@@ -22,13 +22,13 @@ export class PrivateChatService {
 
     async getOne(dto: PrivateChatGetOneDTO) {
         const chat = await this.chatServise.getOne(dto.id)
-        await this.verify(chat, dto.userId)
+        await this.verify(chat.id, dto.userId)
         return chat
     }
 
     async update(dto: PrivateChatUpdateDTO) {
         const chat = await this.chatServise.getOne(dto.id)
-        await this.verify(chat, dto.userId)
+        await this.verify(chat.id, dto.userId)
         chat.name = dto.name
         await chat.save()
         return chat
@@ -36,13 +36,14 @@ export class PrivateChatService {
 
     async delete(dto: PrivateChatDeleteDTO) {
         const chat = await this.chatServise.getOne(dto.id)
-        await this.verify(chat, dto.userId)
-        return chat.destroy()
+        await this.verify(chat.id, dto.userId)
+        return await chat.destroy()
     }
 
-    private async verify(chat: Chat, userId: number) {
-        for (const user of chat.users) {
-            if (user.id === userId) {
+    private async verify(chatId: number, userId: number) {
+        const usersChat = await this.chatServise.getUsersByChatId(chatId)
+        for (const userChat of usersChat) {
+            if (userChat.userId === userId) {
                 return
             }
         }

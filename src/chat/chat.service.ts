@@ -61,4 +61,8 @@ export class ChatService {
             chatId: chatId
         })
     }
+
+    async getUsersByChatId(chatId: number) {
+        return this.userChatRepository.findAll({where: {chatId}, include: {all: true}})
+    }
 }
