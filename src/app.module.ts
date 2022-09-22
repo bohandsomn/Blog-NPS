@@ -38,6 +38,7 @@ import { UserRole } from './user-chat-role/user-role.model'
 import { MailModule } from './mail/mail.module'
 import { UserChatRoleModule } from './user-chat-role/user-chat-role.module'
 import { StyleFileModule } from './style-file/style-file.module'
+import { PrivateChatModule } from './private-chat/private-chat.module';
 
 @Module({
   imports: [
@@ -68,7 +69,14 @@ import { StyleFileModule } from './style-file/style-file.module'
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
       models: [User, Privacy, PhotoUser, Activation, Token, Subscribe, Chat, UserChat, PhotoChat, Message, Post, Comment, LikesComment, LikesPost, UserChatRole, UserRole],
-      autoLoadModels: true
+      autoLoadModels: true,
+      ...(process.env.NODE_ENV === 'production' && {
+        dialectOptions: {
+          ssl: {
+            rejectUnauthorized: false
+          }
+        }
+      })
     }),
     I18nModule.forRoot({
       fallbackLanguage: 'en',
@@ -95,7 +103,8 @@ import { StyleFileModule } from './style-file/style-file.module'
           rejectUnauthorized: false
         }
       }
-    })
+    }),
+    PrivateChatModule
   ]
 })
 export class AppModule {}
