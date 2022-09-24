@@ -1,9 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { TransformInterceptor } from 'src/transform/transform.interceptor'
 import { PrivateChatCreateBodyDTO } from './DTO/private-chat-create.dto'
 import { PrivateChatUpdateBodyDTO } from './DTO/private-chat-update.dto'
 import { PrivateChatService } from './private-chat.service'
 
+@UseInterceptors(TransformInterceptor)
 @Controller('private-chat')
 export class PrivateChatController {
     constructor(

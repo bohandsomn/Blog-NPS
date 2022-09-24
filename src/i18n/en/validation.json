@@ -85,12 +85,12 @@
         "chat": {
             "create": {
                 "chat-id": {
-                    "is-number": "Id must be a number"
+                    "is-string": "Id must be a string"
                 }
             },
             "update": {
                 "chat-id": {
-                    "is-number": "Id must be a number"
+                    "is-string": "Id must be a string"
                 }
             }
         }

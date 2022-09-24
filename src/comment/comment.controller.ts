@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards, UsePipes } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { TransformInterceptor } from 'src/transform/transform.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { Comment } from './comment.model'
 import { CommentService } from './comment.service'
@@ -8,6 +9,7 @@ import { CommentCreateDTO } from './DTO/comment-create.dto'
 import { CommentUpdateDTO } from './DTO/comment-update.dto'
 
 @ApiTags('Comment')
+@UseInterceptors(TransformInterceptor)
 @Controller('comment')
 export class CommentController {
     constructor(

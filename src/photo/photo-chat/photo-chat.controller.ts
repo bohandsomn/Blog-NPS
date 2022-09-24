@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res, UploadedFile, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { TransformInterceptor } from 'src/transform/transform.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { PhotoResizePipe } from '../transformation/photo-resize.pipe'
 import { PhotoChatCreateBodyDTO } from './DTO/photo-chat-create.dto'
@@ -10,6 +11,7 @@ import { PhotoChatUpdateBodyDTO } from './DTO/photo-chat-update.dto'
 import { PhotoChatService } from './photo-chat.service'
 
 @ApiTags('Chat\'s photo')
+@UseInterceptors(TransformInterceptor)
 @Controller('photo/chat')
 export class PhotoChatController {
     constructor(

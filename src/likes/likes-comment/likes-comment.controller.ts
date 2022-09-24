@@ -1,10 +1,12 @@
-import { Controller, Param, Post, Req, UseGuards } from '@nestjs/common'
+import { Controller, Param, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { TransformInterceptor } from 'src/transform/transform.interceptor'
 import { LikesComment } from './likes-comment.model'
 import { LikesCommentService } from './likes-comment.service'
 
 @ApiTags('Comment\'s like')
+@UseInterceptors(TransformInterceptor)
 @Controller('likes-comment/:commentId')
 export class LikesCommentController {
     constructor(
