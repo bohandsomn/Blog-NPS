@@ -31,6 +31,12 @@ export class ChatController {
         return this.chatService.getOne(parseInt(id))
     }
 
+    @Get('/user-id/:userId')
+    @UseGuards(AuthorizationGuard)
+    getOneByUserId(@Param('userId') userId: string) {
+        return this.chatService.getOne(parseInt(userId))
+    }
+
     @ApiOperation({summary: 'Receiving a chats'})
     @ApiResponse({status: 200, type: [Chat]})
     @Get()
