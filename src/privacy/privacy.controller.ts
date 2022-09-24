@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseFilters, UsePipes } from '@nestjs/common'
+import { Body, Controller, Get, Post, UseFilters, UsePipes } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { I18nValidationExceptionFilter } from 'nestjs-i18n'
 import { ValidationPipe } from 'src/validation/validation.pipe'
@@ -20,5 +20,10 @@ export class PrivacyController {
     @UsePipes(ValidationPipe)
     create(@Body() dto: CreatePrivacyDTO) {
         return this.privacyService.create(dto)
+    }
+
+    @Get()
+    getMany() {
+        return this.privacyService.getMany()
     }
 }

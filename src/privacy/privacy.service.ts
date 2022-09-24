@@ -17,6 +17,11 @@ export class PrivacyService {
         return privacy
     }
 
+    async getMany() {
+        const allPrivacy = await this.privacyRepository.findAll()
+        return allPrivacy
+    }
+
     async getByValue(value: string) {
         const privacy = await this.privacyRepository.findOne({where: {value}})
         return privacy
