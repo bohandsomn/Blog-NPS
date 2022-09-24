@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards, UsePipes } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { TransformInterceptor } from 'src/transform/transform.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { Chat } from './chat.model'
 import { ChatService } from './chat.service'
@@ -8,6 +9,7 @@ import { ChatCreateDTO } from './DTO/chat-create.dto'
 import { ChatUpdateDTO } from './DTO/chat-update.dto'
 
 @ApiTags('Chat')
+@UseInterceptors(TransformInterceptor)
 @Controller('chat')
 export class ChatController {
     constructor(

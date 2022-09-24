@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards, UsePipes } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UseGuards, UsePipes, UseInterceptors } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { TransformInterceptor } from 'src/transform/transform.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { PostCreateDTO } from './DTO/post-create.dto'
 import { PostGetManyDTO } from './DTO/post-get-many.dto'
@@ -8,6 +9,7 @@ import { PostUpdateDTO } from './DTO/post-update.dto'
 import { PostService } from './post.service'
 
 @ApiTags('Post')
+@UseInterceptors(TransformInterceptor)
 @Controller('post')
 export class PostController {
     constructor(

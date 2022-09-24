@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Put, Query, Req, UseGuards, UsePipes } from '@nestjs/common'
+import { Body, Controller, Get, Param, Put, Query, Req, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { TransformInterceptor } from 'src/transform/transform.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 
 import { UpdateUserDTO } from './DTO/update-user.dto'
@@ -8,6 +9,7 @@ import { User } from './user.model'
 import { UserService } from './user.service'
 
 @ApiTags('User')
+@UseInterceptors(TransformInterceptor)
 @Controller('user')
 export class UserController {
     constructor(

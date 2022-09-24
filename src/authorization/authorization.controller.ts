@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Headers, Param, Post, Redirect, Req, Res, UseGuards, UsePipes } from '@nestjs/common'
+import { Body, Controller, Get, Headers, Param, Post, Redirect, Req, Res, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
+import { TransformInterceptor } from 'src/transform/transform.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { AuthorizationGuard, RequestUser } from './authorization.guard'
 import { AuthorizationService } from './authorization.service'
@@ -9,6 +10,7 @@ import { AuthorizationRegistrationDTO } from './DTO/authorization-registration.d
 import { AuthorizationUserDataResponseDTO } from './DTO/authorization-user-data-response.dto'
 
 @ApiTags('Authorization')
+@UseInterceptors(TransformInterceptor)
 @Controller('authorization')
 export class AuthorizationController {
     constructor(

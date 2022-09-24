@@ -1,0 +1,129 @@
+{
+    "/authorization/registration": {
+        "POST": "The user has been successfully registered"
+    },
+    "/authorization/login": {
+        "POST": "User successfully logged in"
+    },
+    "/authorization/auto-login": {
+        "GET": "User successfully auto logged in"
+    },
+    "/authorization/refresh": {
+        "GET": "User data successfully refreshed"
+    },
+    "/authorization/logout": {
+        "GET": "User logged out successfully"
+    },
+    "/authorization/activation/:userId": {
+        "GET": "User successfully activated"
+    },
+    "/chat": {
+        "POST": "Chat created successfully",
+        "GET": "Chats received successfully",
+        "PUT": "Chat updated successfully"
+    },
+    "/chat/:chatId": {
+        "GET": "Chat received successfully",
+        "DELETE": "Chat deleted successfully"
+    },
+    "/chat/user-id/:interlocutorId": {
+        "GET": "Chat received successfully"
+    },
+    "/comment/:postId": {
+        "GET": "Comments received successfully"
+    },
+    "/comment": {
+        "POST": "Comment created successfully",
+        "PUT": "Comment updated successfully"
+    },
+    "/comment/:commentId": {
+        "DELETE": "Comment deleted successfully"
+    },
+    "/friendships/:userId/subscribers": {
+        "GET": "Subscribers received successfully"
+    },
+    "/friendships/:userId/subscriptions": {
+        "GET": "Subscriptions received successfully"
+    },
+    "/likes-comment/:commentId/like": {
+        "POST": "Comment has been successfully liked"
+    },
+    "/likes-comment/:commentId/dislike": {
+        "POST": "Comment has been successfully disliked"
+    },
+    "/likes-comment/:commentId/unlike": {
+        "POST": "Comment has been successfully unliked"
+    },
+    "/likes-post/:postId/like": {
+        "POST": "Post has been successfully liked"
+    },
+    "/likes-post/:postId/dislike": {
+        "POST": "Post has been successfully disliked"
+    },
+    "/likes-post/:postId/unlike": {
+        "POST": "Post has been successfully unliked"
+    },
+    "/photo/chat": {
+        "POST": "Photo created successfully",
+        "PUT": "Photo updated successfully"
+    },
+    "/photo/chat/:chatId": {
+        "DELETE": "Photo deleted successfully"
+    },
+    "/photo/user": {
+        "POST": "Photo created successfully",
+        "PUT": "Photo updated successfully",
+        "DELETE": "Photo deleted successfully"
+    },
+    "/post/:postId": {
+        "GET": "Post received successfully"
+    },
+    "/post": {
+        "GET": "Posts received successfully",
+        "POST": "Post created successfully",
+        "PUT": "Post updated successfully",
+        "DELETE": "Delete deleted successfully"
+    },
+    "/privacy": {
+        "GET": "All privacy received successfully",
+        "POST": "Privacy created successfully"
+    },
+    "/private-chat": {
+        "POST": "Chat created successfully",
+        "PATCH": "Chat updated successfully"
+    },
+    "/private-chat/:id": {
+        "GET": "Chat received successfully",
+        "DELETE": "Chat deleted successfully"
+    },
+    "/style": {
+        "GET": "Styles received successfully"
+    },
+    "/style/general": {
+        "PATCH": "Styles updated successfully"
+    },
+    "/style/dark": {
+        "PATCH": "Styles updated successfully"
+    },
+    "/style/light": {
+        "PATCH": "Styles updated successfully"
+    },
+    "/subscribe/:subscriberId/subscribe": {
+        "GET": "User has been successfully subscribed"
+    },
+    "/subscribe/:subscriberId/unsubscribe": {
+        "GET": "User has been successfully unsubscribed"
+    },
+    "/user": {
+        "PUT": "User updated successfully"
+    },
+    "/user/:userId": {
+        "GET": "User received successfully"
+    },
+    "/user-chat-role": {
+        "POST": "User chat role created successfully"
+    },
+    "/user-chat-role/:value": {
+        "GET": "User chat role received successfully"
+    }
+}

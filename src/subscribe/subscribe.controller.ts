@@ -1,10 +1,12 @@
-import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common'
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard';
-import { Subscribe } from './subscribe.model';
-import { SubscribeService } from './subscribe.service';
+import { Controller, Get, Param, Req, UseGuards, UseInterceptors } from '@nestjs/common'
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { TransformInterceptor } from 'src/transform/transform.interceptor'
+import { Subscribe } from './subscribe.model'
+import { SubscribeService } from './subscribe.service'
 
 @ApiTags('Subscribe')
+@UseInterceptors(TransformInterceptor)
 @Controller('subscribe/:subscriberId')
 export class SubscribeController {
     constructor(
