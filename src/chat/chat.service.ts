@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { I18nService } from 'nestjs-i18n'
+import { Op } from 'sequelize'
 import { PrivacyService } from 'src/privacy/privacy.service'
 import { UserChatRoleService } from 'src/user-chat-role/user-chat-role.service'
 import { User } from 'src/user/user.model'
@@ -31,6 +32,18 @@ export class ChatService {
 
     async getOne(id: number) {
         const chat = await this.chatRepository.findByPk(id)
+        if (!chat) {
+            throw new HttpException(this.i18nService.t<string>("exception.chat.get-one.not-found"), HttpStatus.NOT_FOUND)
+        }
+        return chat
+    }
+
+    async getOneByUserId(interlocutorId: number, userId: number) {
+        const userChat = await this.userChatRepository.findOne({where: [{userId: interlocutorId}, {userId}]})
+        if (!userChat) {
+            throw new HttpException(this.i18nService.t<string>("exception.chat.get-one.not-found"), HttpStatus.NOT_FOUND)
+        }
+        const chat = await this.chatRepository.findByPk(userChat.chatId)
         if (!chat) {
             throw new HttpException(this.i18nService.t<string>("exception.chat.get-one.not-found"), HttpStatus.NOT_FOUND)
         }
