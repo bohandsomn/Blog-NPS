@@ -19,23 +19,23 @@ export class TokenService {
     ) { }
 
     generate(dto: CreateTokenDTO) {
-        const refresh = this.jwtService.sign(dto, {secret: process.env.JWT_ACCESS_SECRET_KEY})
-        const access = this.jwtService.sign(dto, {secret: process.env.JWT_REFRESH_SECRET_KEY})
+        const refreshToken = this.jwtService.sign(dto, {secret: process.env.JWT_ACCESS_SECRET_KEY})
+        const accessToken = this.jwtService.sign(dto, {secret: process.env.JWT_REFRESH_SECRET_KEY})
 
         return {
-            refresh,
-            access
+            refreshToken,
+            accessToken
         }
     }
 
     async save(userId: number, tokens: ReturnType<TokenService['generate']>) {
-        const token = await this.tokenRepository.findOne({where: {value: tokens.refresh}})
+        const token = await this.tokenRepository.findOne({where: {value: tokens.refreshToken}})
         if (!token) {
-            const token = await this.tokenRepository.create({userId, value: tokens.refresh})
+            const token = await this.tokenRepository.create({userId, value: tokens.refreshToken})
             return token
         }
 
-        token.value = tokens.refresh
+        token.value = tokens.refreshToken
         await token.save()
         
         return token
@@ -56,7 +56,7 @@ export class TokenService {
         const user = await this.userService.getByPk(id)
 
         const activation = await this.activationService.getById(user.id)
-        const tokens = this.generate({
+        const createTokenDTO = {
             id: user.id,
             name: user.name,
             surname: user.surname,
@@ -64,13 +64,14 @@ export class TokenService {
             login: user.login,
             birthday: user.birthday,
             privacyId: user.privacyId,
-            isActivation: activation.value,
-        })
+            isActivation: activation.value
+        }
+        const tokens = this.generate(createTokenDTO)
         await this.save(user.id, tokens)
 
         return {
             token: tokens,
-            user
+            user: createTokenDTO
         }
     }
 

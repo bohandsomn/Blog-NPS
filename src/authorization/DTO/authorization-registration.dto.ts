@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString, IsEmail, Length, IsLowercase } from 'class-validator'
 import { i18nValidationMessage } from 'nestjs-i18n'
-export class RegistrationAuthorizationDTO {
+
+export class AuthorizationRegistrationDTO {
     @ApiProperty({example: 'Bohdan'})
     @IsString({message: i18nValidationMessage('validation.authorization.registration.name.is-string')})
     readonly name: string
