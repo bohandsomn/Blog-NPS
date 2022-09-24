@@ -6,8 +6,8 @@ import { TokenService } from 'src/token/token.service'
 import { UserPasswordService } from 'src/user/user-password.service'
 import { User } from 'src/user/user.model'
 import { UserService } from 'src/user/user.service'
-import { LoginAuthorizationDTO } from './DTO/login-authorization.dto'
-import { RegistrationAuthorizationDTO } from './DTO/registration-authorization.dto'
+import { AuthorizationLoginDTO } from './DTO/authorization-login.dto'
+import { AuthorizationRegistrationDTO } from './DTO/authorization-registration.dto'
 
 @Injectable()
 export class AuthorizationService {
@@ -20,7 +20,7 @@ export class AuthorizationService {
         private readonly i18nService: I18nService
     ) { }
 
-    async registration(dto: RegistrationAuthorizationDTO) {
+    async registration(dto: AuthorizationRegistrationDTO) {
         await this.userService.emailVerify(dto.email)
         await this.userService.loginVerify(dto.login)
 
@@ -36,17 +36,17 @@ export class AuthorizationService {
             privacyId: user.privacyId,
             isActivation: activation.value
         }
-        const token = await this.tokenService.create(createTokenDTO)
+        await this.tokenService.create(createTokenDTO)
         await this.mailService.sendActivationMail(user.email, `${process.env.API_URL}/authorization/activation/${user.id}`)
 
         const tokens = this.tokenService.generate(createTokenDTO)
         return {
             token: tokens,
-            user
+            user: createTokenDTO
         }
     }
 
-    async login(dto: LoginAuthorizationDTO) {
+    async login(dto: AuthorizationLoginDTO) {
         await this.userService.loginVerify(dto.login, true)
         const user = await this.userService.getByLogin(dto.login)
 
@@ -56,7 +56,7 @@ export class AuthorizationService {
         }
 
         const activation = await this.activationService.getById(user.id)
-        const token = this.tokenService.generate({
+        const createTokenDTO = {
             id: user.id,
             name: user.name,
             surname: user.surname,
@@ -65,17 +65,18 @@ export class AuthorizationService {
             birthday: user.birthday,
             privacyId: user.privacyId,
             isActivation: activation.value
-        })
+        }
+        const token = this.tokenService.generate(createTokenDTO)
 
         return {
             token, 
-            user
+            user: createTokenDTO
         }
     }
 
     async autoLogin(user: User) {
         const activation = await this.activationService.getById(user.id)
-        const token = this.tokenService.generate({
+        const createTokenDTO = {
             id: user.id,
             name: user.name,
             surname: user.surname,
@@ -84,11 +85,12 @@ export class AuthorizationService {
             birthday: user.birthday,
             privacyId: user.privacyId,
             isActivation: activation.value
-        })
+        }
+        const token = this.tokenService.generate(createTokenDTO)
         
         return {
             token,
-            user
+            user: createTokenDTO
         }
     }
 
