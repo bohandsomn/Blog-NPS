@@ -82,7 +82,7 @@
         "GET": "Posts received successfully",
         "POST": "Post created successfully",
         "PUT": "Post updated successfully",
-        "DELETE": "Delete deleted successfully"
+        "DELETE": "Post deleted successfully"
     },
     "/privacy": {
         "GET": "All privacy received successfully",
