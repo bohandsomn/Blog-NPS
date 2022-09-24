@@ -7,7 +7,7 @@ import { CommentService } from './comment.service'
 import { CommentCreateDTO } from './DTO/comment-create.dto'
 import { CommentUpdateDTO } from './DTO/comment-update.dto'
 
-@ApiTags('Chat')
+@ApiTags('Comment')
 @Controller('comment')
 export class CommentController {
     constructor(

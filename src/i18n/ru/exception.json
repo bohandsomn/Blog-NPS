@@ -77,6 +77,11 @@
             "not-found": "Комментарий не найден"
         }
     },
+    "private-chat": {
+        "verify": {
+            "not-access": "Доступ в чат запрещен"
+        }
+    },
     "guard": {
         "authorization": {
             "unauthorized": "Пользователь не авторизован"
