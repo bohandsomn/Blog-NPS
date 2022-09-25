@@ -13,6 +13,7 @@ import { User } from './user.model'
 import { UserService } from './user.service'
 import { UserPasswordService } from './user-password.service'
 import { TokenModule } from 'src/token/token.module'
+import { ActivationModule } from 'src/activation/activation.module'
 
 @Module({
   controllers: [UserController],
@@ -20,6 +21,7 @@ import { TokenModule } from 'src/token/token.module'
   imports: [
     SequelizeModule.forFeature([User, Privacy, PhotoUser, Chat, UserChat, UserChatRole, UserRole]),
     PrivacyModule,
+    ActivationModule,
     forwardRef(() => TokenModule)
   ],
   exports: [UserService, UserPasswordService]
