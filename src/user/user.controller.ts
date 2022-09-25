@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Param, Put, Query, Req, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
+import { Body, Controller, Get, Param, Put, Query, Req, Res, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { Response } from 'express'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { AuthorizationUserDataResponseDTO } from 'src/authorization/DTO/authorization-user-data-response.dto'
 import { TransformInterceptor } from 'src/transform/transform.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 
@@ -28,8 +30,13 @@ export class UserController {
     @Put()
     @UseGuards(AuthorizationGuard)
     @UsePipes(ValidationPipe)
-    update(@Body() dto: UpdateUserDTO, @Req() request: RequestUser) {
-        return this.userService.update({...dto, id: request.user.id})
+    async update(@Body() dto: UpdateUserDTO, @Req() request: RequestUser, @Res() response: Response): Promise<AuthorizationUserDataResponseDTO> {
+        const { user, token: { refreshToken, accessToken } } = await this.userService.update({...dto, id: request.user.id})
+        response.cookie(process.env.COOKIE_TOKEN_NAME, refreshToken, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })
+        return {
+            user,
+            accessToken
+        }
     }
 
     @Get('/:userId')
