@@ -47,6 +47,9 @@
     "photo-user": {
         "create": {
             "has-id": "Користувач вже зареєстрований"
+        },
+        "get-stream": {
+            "has-file-path": "Шлях до файлу не знайдено"
         }
     },
     "chat": {
@@ -60,6 +63,9 @@
         },
         "get-by-chat-id": {
             "not-found": "Фото не знайдено"
+        },
+        "get-stream": {
+            "has-file-path": "Шлях до файлу не знайдено"
         }
     },
     "user-chat-role": {
@@ -75,6 +81,11 @@
     "comment": {
         "verify": {
             "not-found": "Коментар не знайдено"
+        }
+    },
+    "private-chat": {
+        "verify": {
+            "not-access": "Доступ до чату заборонено"
         }
     },
     "guard": {

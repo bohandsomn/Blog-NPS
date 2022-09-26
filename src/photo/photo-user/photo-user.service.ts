@@ -18,22 +18,22 @@ export class PhotoUserService {
 
     async getOriginal(dto: PhotoUserGetDTO) {
         const photo = await this.getByUserId(parseInt(dto.userId))
-        return this.getStream(photo.original)
+        return this.getStream(photo?.original)
     }
 
     async getPost(dto: PhotoUserGetDTO) {
         const photo = await this.getByUserId(parseInt(dto.userId))
-        return this.getStream(photo.post)
+        return this.getStream(photo?.post)
     }
 
     async getPreview(dto: PhotoUserGetDTO) {
         const photo = await this.getByUserId(parseInt(dto.userId))
-        return this.getStream(photo.preview)
+        return this.getStream(photo?.preview)
     }
 
     async getMessage(dto: PhotoUserGetDTO) {
         const photo = await this.getByUserId(parseInt(dto.userId))
-        return this.getStream(photo.message)
+        return this.getStream(photo?.message)
     }
 
     async create(dto: PhotoUserCreateDTO) {
@@ -69,7 +69,10 @@ export class PhotoUserService {
         return photo
     }
 
-    private getStream(filePath: string) {
+    private getStream(filePath: string | undefined) {
+        if (!filePath) {
+            throw new HttpException(this.i18nService.t<string>('exception.photo-user.get-stream.has-file-path'), HttpStatus.NOT_FOUND)
+        }
         const fullPath = path.join(PhotoResizePipe.staticPath, filePath)
         return FileSystem.createReadStream(fullPath)
     }

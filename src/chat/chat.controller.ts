@@ -1,6 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards, UsePipes } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { Chat } from './chat.model'
 import { ChatService } from './chat.service'
@@ -8,6 +9,7 @@ import { ChatCreateDTO } from './DTO/chat-create.dto'
 import { ChatUpdateDTO } from './DTO/chat-update.dto'
 
 @ApiTags('Chat')
+@UseInterceptors(TransformServerMessageInterceptor)
 @Controller('chat')
 export class ChatController {
     constructor(
@@ -29,6 +31,15 @@ export class ChatController {
     @UseGuards(AuthorizationGuard)
     getOne(@Param('chatId') id: string) {
         return this.chatService.getOne(parseInt(id))
+    }
+
+    @Get('/user-id/:interlocutorId')
+    @UseGuards(AuthorizationGuard)
+    getOneByUserId(
+        @Param('interlocutorId') interlocutorId: string,
+        @Req() request: RequestUser
+    ) {
+        return this.chatService.getOneByUserId(parseInt(interlocutorId), request.user.id)
     }
 
     @ApiOperation({summary: 'Receiving a chats'})
