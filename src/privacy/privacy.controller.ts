@@ -24,6 +24,8 @@ export class PrivacyController {
         return this.privacyService.create(dto)
     }
 
+    @ApiOperation({summary: 'Receiving all the privacy'})
+    @ApiResponse({status: 200, type: [Privacy]})
     @Get()
     getMany() {
         return this.privacyService.getMany()

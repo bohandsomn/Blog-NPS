@@ -39,6 +39,8 @@ export class UserController {
         }
     }
 
+    @ApiOperation({summary: 'User receive'})
+    @ApiResponse({status: 200, type: User})
     @Get('/:userId')
     getOne(@Param('userId') userId: string) {
         return this.userService.getByPk(parseInt(userId))
