@@ -1,4 +1,5 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable, forwardRef } from '@nestjs/common'
+import { Inject } from '@nestjs/common/decorators'
 import { InjectModel } from '@nestjs/sequelize'
 import { Op } from 'sequelize'
 import { Sequelize } from 'sequelize-typescript'
@@ -10,6 +11,8 @@ import { PrivacyService } from 'src/privacy/privacy.service'
 import { CreateUserDTO } from './DTO/create-user.dto'
 import { UserPasswordService } from './user-password.service'
 import { Chat } from 'src/chat/chat.model'
+import { ActivationService } from 'src/activation/activation.service'
+import { TokenService } from 'src/token/token.service'
 
 @Injectable()
 export class UserService {
@@ -17,7 +20,9 @@ export class UserService {
         @InjectModel(User) private readonly userRepository: typeof User,
         private readonly privacyService: PrivacyService,
         private readonly userPasswordService: UserPasswordService,
-        private readonly i18nService: I18nService
+        private readonly i18nService: I18nService,
+        private readonly activationService: ActivationService,
+        @Inject(forwardRef(() => TokenService)) private readonly tokenService: TokenService
     ) { }
 
     async getPreview(fullname: string) {
@@ -39,8 +44,15 @@ export class UserService {
         }
 
         const privacy = await this.privacyService.getByValue(dto.privacy)
-        await this.emailVerify(dto.email)
-        await this.loginVerify(dto.login)
+        
+        const candidateByEmail = await this.getByEmail(dto.email)
+        const candidateByLogin = await this.getByLogin(dto.login)
+        if (candidateByEmail.id !== user.id) {
+            throw new HttpException(this.i18nService.t<string>("exception.user.id-verify.has-id"), HttpStatus.CONFLICT)
+        }
+        if (candidateByLogin.id !== user.id) {
+            throw new HttpException(this.i18nService.t<string>("exception.user.email-verify.has-email"), HttpStatus.CONFLICT)    
+        }
 
         user.name = dto.name
         user.surname = dto.surname
@@ -50,7 +62,24 @@ export class UserService {
         user.privacyId = privacy.id
 
         await user.save()
-        return user
+        
+        const activation = await this.activationService.getById(user.id)
+        const createTokenDTO = {
+            id: user.id,
+            name: user.name,
+            surname: user.surname,
+            email: user.email,
+            login: user.login,
+            birthday: user.birthday,
+            privacyId: user.privacyId,
+            isActivation: activation.value
+        }
+        const token = this.tokenService.generate(createTokenDTO)
+        
+        return {
+            token,
+            user: createTokenDTO
+        }
     }
 
     async create(dto: CreateUserDTO) {

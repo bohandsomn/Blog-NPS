@@ -3,10 +3,12 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { PhotoResizePipe } from '../transformation/photo-resize.pipe'
 import { PhotoUserService } from './photo-user.service'
 
 @ApiTags('User\'s photo')
+@UseInterceptors(TransformServerMessageInterceptor)
 @Controller('photo/user')
 export class PhotoUserController {
     constructor(

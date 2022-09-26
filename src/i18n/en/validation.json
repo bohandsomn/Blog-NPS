@@ -85,12 +85,12 @@
         "chat": {
             "create": {
                 "chat-id": {
-                    "is-number": "Id must be a number"
+                    "is-string": "Id must be a string"
                 }
             },
             "update": {
                 "chat-id": {
-                    "is-number": "Id must be a number"
+                    "is-string": "Id must be a string"
                 }
             }
         }
@@ -181,6 +181,21 @@
         "create": {
             "value": {
                 "is-string": "Role must be a string"
+            }
+        }
+    },
+    "private-chat": {
+        "update": {
+            "id": {
+                "is-number": "Id must be a number"
+            },
+            "name": {
+                "is-string": "Name must be a string"
+            }
+        },
+        "create": {
+            "interlocutor-id": {
+                "is-number": "Id must be a number"
             }
         }
     }

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsNumber } from 'class-validator'
+import { IsString } from 'class-validator'
 import { i18nValidationMessage } from 'nestjs-i18n'
 export class PhotoChatCreateDTO {
     @ApiProperty({example: 1})
@@ -11,6 +11,6 @@ export class PhotoChatCreateDTO {
 
 export class PhotoChatCreateBodyDTO {
     @ApiProperty({example: 1})
-    @IsNumber({}, {message: i18nValidationMessage('validation.photo.chat.create.chat-id.is-number')})
+    @IsString({message: i18nValidationMessage('validation.photo.chat.create.chat-id.is-string')})
     readonly chatId: number
 }

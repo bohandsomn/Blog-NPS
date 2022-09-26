@@ -13,10 +13,7 @@ import { UserModule } from 'src/user/user.module'
     imports: [
         SequelizeModule.forFeature([Token, User]),
         JwtModule.register({
-            secret: process.env.PRIVATE_KEY || 'SECRET',
-            signOptions: {
-                expiresIn: '24h'
-            }
+            secret: process.env.PRIVATE_KEY || 'SECRET'
         }),
         ActivationModule,
         forwardRef(() => UserModule)

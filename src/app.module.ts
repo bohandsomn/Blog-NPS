@@ -38,6 +38,7 @@ import { UserRole } from './user-chat-role/user-role.model'
 import { MailModule } from './mail/mail.module'
 import { UserChatRoleModule } from './user-chat-role/user-chat-role.module'
 import { StyleFileModule } from './style-file/style-file.module'
+import { PrivateChatModule } from './private-chat/private-chat.module';
 
 @Module({
   imports: [
@@ -102,7 +103,8 @@ import { StyleFileModule } from './style-file/style-file.module'
           rejectUnauthorized: false
         }
       }
-    })
+    }),
+    PrivateChatModule
   ]
 })
 export class AppModule {}

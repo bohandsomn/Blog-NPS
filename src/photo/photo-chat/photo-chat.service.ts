@@ -63,6 +63,9 @@ export class PhotoChatService {
 
     private getStream(filePath: string) {
         const fullPath = path.join(PhotoResizePipe.staticPath, filePath)
+        if (!FileSystem.existsSync(fullPath)) {
+            throw new HttpException(this.i18nService.t<string>('exception.photo-chat.get-stream.has-file-path'), HttpStatus.NOT_FOUND)
+        }
         return FileSystem.createReadStream(fullPath)
     }
 
