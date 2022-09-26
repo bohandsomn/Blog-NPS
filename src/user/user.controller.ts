@@ -3,7 +3,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
 import { AuthorizationUserDataResponseDTO } from 'src/authorization/DTO/authorization-user-data-response.dto'
-import { TransformInterceptor } from 'src/transform/transform.interceptor'
+import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 
 import { UpdateUserDTO } from './DTO/update-user.dto'
@@ -11,7 +11,7 @@ import { User } from './user.model'
 import { UserService } from './user.service'
 
 @ApiTags('User')
-@UseInterceptors(TransformInterceptor)
+@UseInterceptors(TransformServerMessageInterceptor)
 @Controller('user')
 export class UserController {
     constructor(

@@ -47,6 +47,9 @@
     "photo-user": {
         "create": {
             "has-id": "The user is already registered"
+        },
+        "get-stream": {
+            "has-file-path": "File path not found"
         }
     },
     "chat": {
@@ -60,6 +63,9 @@
         },
         "get-by-chat-id": {
             "not-found": "Photo not found"
+        },
+        "get-stream": {
+            "has-file-path": "File path not found"
         }
     },
     "user-chat-role": {

@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Patch, UseInterceptors } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { TransformInterceptor } from 'src/transform/transform.interceptor'
+import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { StyleService } from './style.service'
 
 @ApiTags('Style')
-@UseInterceptors(TransformInterceptor)
+@UseInterceptors(TransformServerMessageInterceptor)
 @Controller('style')
 export class StyleController {
     constructor(
