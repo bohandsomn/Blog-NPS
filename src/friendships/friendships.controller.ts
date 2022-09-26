@@ -2,11 +2,11 @@ import { Controller, Get, Param, UseGuards, UseInterceptors } from '@nestjs/comm
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard } from 'src/authorization/authorization.guard'
 import { Subscribe } from 'src/subscribe/subscribe.model'
-import { TransformInterceptor } from 'src/transform/transform.interceptor'
+import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { FriendshipsService } from './friendships.service'
 
 @ApiTags('Friendships')
-@UseInterceptors(TransformInterceptor)
+@UseInterceptors(TransformServerMessageInterceptor)
 @Controller('friendships/:userId')
 export class FriendshipsController {
     constructor(

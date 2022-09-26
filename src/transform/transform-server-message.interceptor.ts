@@ -9,7 +9,7 @@ export interface Response<T> {
 }
 
 @Injectable()
-export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> {
+export class TransformServerMessageInterceptor<T> implements NestInterceptor<T, Response<T>> {
     constructor(
         private readonly i18nService: I18nService
     ) { }

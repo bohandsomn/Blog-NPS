@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common'
 import { Request } from 'express'
-import { Observable } from 'rxjs'
 import { getI18nContextFromRequest } from 'nestjs-i18n'
 import { User } from 'src/user/user.model'
 import { TokenService } from 'src/token/token.service'
@@ -15,9 +14,7 @@ export class AuthorizationGuard implements CanActivate {
         private readonly tokenService: TokenService
     ) { }
 
-    async canActivate(
-        context: ExecutionContext,
-    ): Promise<boolean> {
+    async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest<Request>()
         const i18n = getI18nContextFromRequest(request)
 
