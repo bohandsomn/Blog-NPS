@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable, Logger, UnauthorizedException } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { JwtService } from '@nestjs/jwt'
 import { I18nService } from 'nestjs-i18n'
@@ -51,7 +51,7 @@ export class TokenService {
             throw new HttpException(this.i18nService.t<string>("exception.token.refresh.empty-token"), HttpStatus.UNAUTHORIZED)
         }
 
-        const { id } = await this.verify(refreshToken, 'ACCESS')
+        const { id } = await this.verify(refreshToken, 'REFRESH')
         await this.userService.idVerify(id, true)
         const user = await this.userService.getByPk(id)
 

@@ -94,8 +94,7 @@ export class AuthorizationService {
         }
     }
 
-    async refresh(authorization: string) {
-        const token = this.tokenService.split(authorization)
+    async refresh(token: string) {
         return this.tokenService.refresh(token)
     }
 
