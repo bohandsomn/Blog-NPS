@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Put, Query, Req, Res, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
+import { Body, Controller, Get, Param, Put, Req, Res, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
@@ -7,7 +7,7 @@ import { TransformServerMessageInterceptor } from 'src/transform/transform-serve
 import { ValidationPipe } from 'src/validation/validation.pipe'
 
 import { UpdateUserDTO } from './DTO/update-user.dto'
-import { User } from './user.model'
+import { UserResponseDTO } from './DTO/user-response.dto'
 import { UserService } from './user.service'
 
 @ApiTags('User')
@@ -18,15 +18,7 @@ export class UserController {
         private readonly userService: UserService
     ) { }
 
-    // @ApiOperation({summary: 'Receiving a users preview'})
-    // @ApiResponse({status: 200, type: [User]})
-    // @Get('/preview')
-    // getPreview(@Query('fullname') fullname: string) {
-    //     return this.userService.getPreview(fullname)
-    // }
-
     @ApiOperation({summary: 'User update'})
-    @ApiResponse({status: 200, type: User})
     @Put()
     @UseGuards(AuthorizationGuard)
     @UsePipes(ValidationPipe)
@@ -40,9 +32,9 @@ export class UserController {
     }
 
     @ApiOperation({summary: 'User receive'})
-    @ApiResponse({status: 200, type: User})
+    @ApiResponse({status: 200, type: UserResponseDTO})
     @Get('/:userId')
     getOne(@Param('userId') userId: string) {
-        return this.userService.getByPk(parseInt(userId))
+        return this.userService.getOne(parseInt(userId))
     }
 }
