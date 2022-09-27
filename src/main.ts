@@ -18,6 +18,7 @@ async function bootstrap() {
 
   app.use(cookieParser())
   app.useGlobalFilters(new I18nValidationExceptionFilter())
+  app.enableCors({origin: process.env.CLIENT_URL, credentials: true})
   await app.listen(PORT, () => console.log(`Server run on port = ${PORT}`))
 }
 bootstrap()
