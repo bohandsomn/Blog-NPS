@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Headers, Param, Post, Redirect, Req, Res, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { Response } from 'express'
+import { Request, Response } from 'express'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { TransformTokenInterceptor } from 'src/transform/transform-token.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
@@ -44,8 +44,8 @@ export class AuthorizationController {
     @ApiOperation({summary: 'Token refresh'})
     @Get('refresh')
     @UseInterceptors(new TransformTokenInterceptor())
-    refresh(@Headers() headers: Record<'authorization', string>) {
-        return this.authorizationService.refresh(headers.authorization)
+    refresh(@Req() request: Request) {
+        return this.authorizationService.refresh(request.cookies[process.env.COOKIE_TOKEN_NAME])
     }
 
     @ApiOperation({summary: 'User logout'})
