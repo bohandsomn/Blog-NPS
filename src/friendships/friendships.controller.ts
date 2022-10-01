@@ -1,4 +1,4 @@
-import { Controller, Get, Param, UseGuards, UseInterceptors } from '@nestjs/common'
+import { Controller, Get, Param, UseGuards, UseInterceptors, HttpStatus } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard } from 'src/authorization/authorization.guard'
 import { Subscribe } from 'src/subscribe/subscribe.model'
@@ -14,7 +14,7 @@ export class FriendshipsController {
     ) { }
 
     @ApiOperation({summary: 'Getting subscribers'})
-    @ApiResponse({status: 200, type: [Subscribe]})
+    @ApiResponse({status: HttpStatus.OK, type: [Subscribe]})
     @Get('/subscribers')
     @UseGuards(AuthorizationGuard)
     getSubscribers(@Param('userId') userId: string) {
@@ -22,7 +22,7 @@ export class FriendshipsController {
     }
 
     @ApiOperation({summary: 'Getting subscriptions'})
-    @ApiResponse({status: 200, type: [Subscribe]})
+    @ApiResponse({status: HttpStatus.OK, type: [Subscribe]})
     @Get('/subscriptions')
     @UseGuards(AuthorizationGuard)
     getSubscriptions(@Param('userId') userId: string) {
