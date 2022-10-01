@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Req, UseGuards, UseInterceptors, HttpStatus } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
 import { Chat } from 'src/chat/chat.model'
+import { DocumentationHttpExceptionDTO } from 'src/documentation/documentation.http-exception.dto'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { PrivateChatCreateBodyDTO } from './DTO/private-chat-create.dto'
 import { PrivateChatUpdateBodyDTO } from './DTO/private-chat-update.dto'
@@ -16,7 +17,7 @@ export class PrivateChatController {
     ) { }
 
     @ApiOperation({summary: 'Chat creation'})
-    @ApiResponse({status: 200, type: Chat})
+    @ApiResponse({status: HttpStatus.OK, type: Chat})
     @Post()
     @UseGuards(AuthorizationGuard)
     create(@Req() request: RequestUser, @Body() dto: PrivateChatCreateBodyDTO) {
@@ -24,7 +25,9 @@ export class PrivateChatController {
     }
 
     @ApiOperation({summary: 'Receiving a chat'})
-    @ApiResponse({status: 200, type: Chat})
+    @ApiResponse({status: HttpStatus.OK, type: Chat})
+    @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
+    @ApiResponse({status: HttpStatus.FORBIDDEN, type: DocumentationHttpExceptionDTO})
     @Get('/:id')
     @UseGuards(AuthorizationGuard)
     getOne(@Req() request: RequestUser, @Param('id') id: string) {
@@ -32,7 +35,9 @@ export class PrivateChatController {
     }
 
     @ApiOperation({summary: 'Chat update'})
-    @ApiResponse({status: 200, type: Chat})
+    @ApiResponse({status: HttpStatus.OK, type: Chat})
+    @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
+    @ApiResponse({status: HttpStatus.FORBIDDEN, type: DocumentationHttpExceptionDTO})
     @Patch()
     @UseGuards(AuthorizationGuard)
     update(@Req() request: RequestUser, @Body() dto: PrivateChatUpdateBodyDTO) {
@@ -40,6 +45,9 @@ export class PrivateChatController {
     }
 
     @ApiOperation({summary: 'Deleting a chat'})
+    @ApiResponse({status: HttpStatus.NO_CONTENT})
+    @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
+    @ApiResponse({status: HttpStatus.FORBIDDEN, type: DocumentationHttpExceptionDTO})
     @Delete('/:id') 
     @UseGuards(AuthorizationGuard)
     delete(@Req() request: RequestUser, @Param('id') id: string) {

@@ -1,4 +1,4 @@
-import { Controller, Param, Post, Req, UseGuards, UseInterceptors } from '@nestjs/common'
+import { Controller, Param, Post, Req, UseGuards, UseInterceptors, HttpStatus } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
@@ -14,7 +14,7 @@ export class LikesCommentController {
     ) { }
 
     @ApiOperation({summary: 'Set like'})
-    @ApiResponse({status: 200, type: LikesComment})
+    @ApiResponse({status: HttpStatus.OK, type: LikesComment})
     @Post('like')
     @UseGuards(AuthorizationGuard)
     like(@Req() request: RequestUser, @Param('commentId') commentId: string) {
@@ -22,7 +22,7 @@ export class LikesCommentController {
     }
 
     @ApiOperation({summary: 'Set dislike'})
-    @ApiResponse({status: 200, type: LikesComment})
+    @ApiResponse({status: HttpStatus.OK, type: LikesComment})
     @Post('dislike')
     @UseGuards(AuthorizationGuard)
     dislike(@Req() request: RequestUser, @Param('commentId') commentId: string) {
@@ -30,7 +30,7 @@ export class LikesCommentController {
     }
 
     @ApiOperation({summary: 'Unlike'})
-    @ApiResponse({status: 200, type: LikesComment})
+    @ApiResponse({status: HttpStatus.OK, type: LikesComment})
     @Post('unlike')
     @UseGuards(AuthorizationGuard)
     unlike(@Req() request: RequestUser, @Param('commentId') commentId: string) {

@@ -100,7 +100,7 @@ export class AuthorizationService {
 
     async logout(authorization: string) {
         const refreshToken = this.tokenService.split(authorization)
-        this.tokenService.delete(refreshToken)
+        await this.tokenService.delete(refreshToken)
         return refreshToken
     }
 
