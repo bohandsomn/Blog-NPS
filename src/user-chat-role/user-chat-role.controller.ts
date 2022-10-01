@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Param, Post, UseGuards, UsePipes, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, UseGuards, UsePipes, UseInterceptors, HttpStatus } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard } from 'src/authorization/authorization.guard'
+import { DocumentationHttpExceptionDTO } from 'src/documentation/documentation.http-exception.dto'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { UserChatRoleCreateDTO } from './DTO/user-chat-role-create.dto'
@@ -16,7 +17,8 @@ export class UserChatRoleController {
     ) { }
 
     @ApiOperation({summary: 'User chat role creation'})
-    @ApiResponse({status: 200, type: UserChatRole})
+    @ApiResponse({status: HttpStatus.OK, type: UserChatRole})
+    @ApiResponse({status: HttpStatus.CONFLICT, type: DocumentationHttpExceptionDTO})
     @Post()
     @UseGuards(AuthorizationGuard)
     @UsePipes(ValidationPipe)
@@ -25,7 +27,7 @@ export class UserChatRoleController {
     }
 
     @ApiOperation({summary: 'Receiving a user chat role'})
-    @ApiResponse({status: 200, type: UserChatRole})
+    @ApiResponse({status: HttpStatus.OK, type: UserChatRole})
     @Get('/:value')
     @UseGuards(AuthorizationGuard)
     getByValue(@Param('value') value: string) {
