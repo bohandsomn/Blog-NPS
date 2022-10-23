@@ -80,7 +80,8 @@
     },
     "comment": {
         "verify": {
-            "not-found": "Коментар не знайдено"
+            "not-found": "Коментар не знайдено",
+            "has-value": "Коментар вже існує"
         }
     },
     "private-chat": {

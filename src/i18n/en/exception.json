@@ -80,7 +80,8 @@
     },
     "comment": {
         "verify": {
-            "not-found": "Comment not found"
+            "not-found": "Comment not found",
+            "has-value": "Comment already exists"
         }
     },
     "private-chat": {
