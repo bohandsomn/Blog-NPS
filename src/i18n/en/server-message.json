@@ -54,6 +54,9 @@
     "/likes-comment/:commentId/unlike": {
         "POST": "Comment has been successfully unliked"
     },
+    "/likes-comment/:commentId/:userId": {
+        "GET": "Comment like data successfully received"
+    },
     "/likes-post/:postId/like": {
         "POST": "Post has been successfully liked"
     },
@@ -62,6 +65,9 @@
     },
     "/likes-post/:postId/unlike": {
         "POST": "Post has been successfully unliked"
+    },
+    "/likes-post/:postId/:userId": {
+        "GET": "Post like data successfully received"
     },
     "/photo/chat": {
         "POST": "Photo created successfully",
