@@ -75,7 +75,8 @@
     },
     "post": {
         "verify": {
-            "not-found": "Post not found"
+            "not-found": "Post not found",
+            "has-value": "Post already exists"
         }
     },
     "comment": {
