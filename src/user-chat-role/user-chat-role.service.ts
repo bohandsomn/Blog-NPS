@@ -24,7 +24,11 @@ export class UserChatRoleService {
 
     async verify(value: string, mustHave = false) {
         const hasRole = !!await this.getByValue(value)
-        if (hasRole !== mustHave) {
+        if (mustHave && !hasRole) {
+            throw new HttpException(this.i18nService.t<string>('exception.user-chat-role.verify.not-found'), HttpStatus.NOT_FOUND)
+        }
+
+        if (!mustHave && hasRole) {
             throw new HttpException(this.i18nService.t<string>('exception.user-chat-role.verify.has-value'), HttpStatus.CONFLICT)
         }
     }

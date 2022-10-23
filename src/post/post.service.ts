@@ -75,8 +75,13 @@ export class PostService {
 
     async verify(postId: number, mustHave = false) {
         const hasPost = !!await this.postRepository.findByPk(postId)
-        if (hasPost !== mustHave) {
+
+        if (mustHave && !hasPost) {
             throw new HttpException(this.i18nService.t<string>('exception.post.verify.not-found'), HttpStatus.NOT_FOUND)
+        }
+
+        if (!mustHave && hasPost) {
+            throw new HttpException(this.i18nService.t<string>('exception.post.verify.has-value'), HttpStatus.NOT_FOUND)
         }
     }
 }
