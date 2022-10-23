@@ -1,6 +1,7 @@
-import { Controller, Param, Post, Req, UseGuards, UseInterceptors, HttpStatus } from '@nestjs/common'
+import { Controller, Param, Post, Req, UseGuards, UseInterceptors, HttpStatus, Get } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { DocumentationHttpExceptionDTO } from 'src/documentation/documentation.http-exception.dto'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { LikesComment } from './likes-comment.model'
 import { LikesCommentService } from './likes-comment.service'
@@ -12,6 +13,17 @@ export class LikesCommentController {
     constructor(
         private readonly likesCommentService: LikesCommentService
     ) { }
+
+    @ApiOperation({summary: 'Getting like'})
+    @ApiResponse({status: HttpStatus.OK, type: LikesComment})
+    @Get('/:userId')
+    async getOne(@Param('commentId') commentId: string, @Param('userId') userId: string) {
+        const likePost = await this.likesCommentService.getOne({commentId, userId: parseInt(userId)})
+        if (likePost === null) {
+            return this.likesCommentService.unlike({commentId, userId: parseInt(userId)})
+        }
+        return likePost
+    }
 
     @ApiOperation({summary: 'Set like'})
     @ApiResponse({status: HttpStatus.OK, type: LikesComment})
