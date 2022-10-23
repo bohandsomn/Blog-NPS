@@ -1,6 +1,7 @@
-import { Controller, Param, Post, Req, UseGuards, UseInterceptors, HttpStatus } from '@nestjs/common'
+import { Controller, Param, Post, Req, UseGuards, UseInterceptors, HttpStatus, Get } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { DocumentationHttpExceptionDTO } from 'src/documentation/documentation.http-exception.dto'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { LikesPost } from './likes-post.model'
 import { LikesPostService } from './likes-post.service'
@@ -12,6 +13,17 @@ export class LikesPostController {
     constructor(
         private readonly likesPostService: LikesPostService
     ) { }
+
+    @ApiOperation({summary: 'Getting like'})
+    @ApiResponse({status: HttpStatus.OK, type: LikesPost})
+    @Get('/:userId')
+    async getOne(@Param('postId') postId: string, @Param('userId') userId: string) {
+        const likePost = await this.likesPostService.getOne({postId, userId: parseInt(userId)})
+        if (likePost === null) {
+            return this.likesPostService.unlike({postId, userId: parseInt(userId)})
+        }
+        return likePost
+    }
 
     @ApiOperation({summary: 'Set like'})
     @ApiResponse({status: HttpStatus.OK, type: LikesPost})
