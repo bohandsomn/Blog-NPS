@@ -13,6 +13,7 @@ import { UserPasswordService } from './user-password.service'
 import { Chat } from 'src/chat/chat.model'
 import { ActivationService } from 'src/activation/activation.service'
 import { TokenService } from 'src/token/token.service'
+import { UserResponseDTO } from './DTO/user-response.dto'
 
 @Injectable()
 export class UserService {
@@ -94,6 +95,21 @@ export class UserService {
             privacyId: privacy.id,
         })
         return user
+    }
+
+    async getOne(id: number): Promise<UserResponseDTO> {
+        await this.idVerify(id, true)
+        const user = await this.getByPk(id)
+        const activation = await this.activationService.getById(user.id)
+        return {
+            id: user.id,
+            name: user.name,
+            surname: user.surname,
+            email: user.email,
+            login: user.login,
+            birthday: user.birthday,
+            isActivation: activation.value
+        }
     }
 
     async getByPk(id: number) {

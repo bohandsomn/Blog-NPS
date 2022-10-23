@@ -20,28 +20,12 @@ export class SubscribeService {
     }
 
     async getSubscribers(userId: string) {
-        const subscribers = await this.subscribeRepository.findAll({
-            include: {
-                all: true
-            },
-            where: {
-                userId
-            }
-        })
-        
+        const subscribers = await this.subscribeRepository.findAll({include: {all: true}, where: {userId}})
         return subscribers
     }
 
     async getSubscriptions(userId: string) {
-        const subscriptions = await this.subscribeRepository.findAll({
-            include: {
-                all: true
-            },
-            where: {
-                subscriberId: userId
-            }
-        })
-        
+        const subscriptions = await this.subscribeRepository.findAll({include: {all: true}, where: {subscriberId: userId}})
         return subscriptions
     }
 }

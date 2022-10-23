@@ -1,13 +1,14 @@
-import { Body, Controller, Get, Param, Put, Query, Req, Res, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
+import { Body, Controller, Get, Param, Put, Req, Res, UseGuards, UseInterceptors, UsePipes, HttpStatus } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
 import { AuthorizationUserDataResponseDTO } from 'src/authorization/DTO/authorization-user-data-response.dto'
+import { DocumentationHttpExceptionDTO } from 'src/documentation/documentation.http-exception.dto'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 
 import { UpdateUserDTO } from './DTO/update-user.dto'
-import { User } from './user.model'
+import { UserResponseDTO } from './DTO/user-response.dto'
 import { UserService } from './user.service'
 
 @ApiTags('User')
@@ -18,15 +19,10 @@ export class UserController {
         private readonly userService: UserService
     ) { }
 
-    // @ApiOperation({summary: 'Receiving a users preview'})
-    // @ApiResponse({status: 200, type: [User]})
-    // @Get('/preview')
-    // getPreview(@Query('fullname') fullname: string) {
-    //     return this.userService.getPreview(fullname)
-    // }
-
     @ApiOperation({summary: 'User update'})
-    @ApiResponse({status: 200, type: User})
+    @ApiResponse({status: HttpStatus.OK, type: AuthorizationUserDataResponseDTO})
+    @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
+    @ApiResponse({status: HttpStatus.CONFLICT, type: DocumentationHttpExceptionDTO})
     @Put()
     @UseGuards(AuthorizationGuard)
     @UsePipes(ValidationPipe)
@@ -40,9 +36,11 @@ export class UserController {
     }
 
     @ApiOperation({summary: 'User receive'})
-    @ApiResponse({status: 200, type: User})
+    @ApiResponse({status: HttpStatus.OK, type: UserResponseDTO})
+    @ApiResponse({status: HttpStatus.CONFLICT, type: DocumentationHttpExceptionDTO})
+    @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
     @Get('/:userId')
     getOne(@Param('userId') userId: string) {
-        return this.userService.getByPk(parseInt(userId))
+        return this.userService.getOne(parseInt(userId))
     }
 }

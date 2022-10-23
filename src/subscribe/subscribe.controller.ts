@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Req, UseGuards, UseInterceptors } from '@nestjs/common'
+import { Controller, Get, Param, Req, UseGuards, UseInterceptors, HttpStatus } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
@@ -14,7 +14,7 @@ export class SubscribeController {
     ) { }
 
     @ApiOperation({summary: 'Receiving a subscribe'})
-    @ApiResponse({status: 200, type: Subscribe})
+    @ApiResponse({status: HttpStatus.OK, type: Subscribe})
     @Get('subscribe')
     @UseGuards(AuthorizationGuard)
     subscribe(@Param('subscriberId') subscriberId: string, @Req() request: RequestUser) {
@@ -22,6 +22,7 @@ export class SubscribeController {
     }
 
     @ApiOperation({summary: 'Receiving a unsubscribe'})
+    @ApiResponse({status: HttpStatus.NO_CONTENT})
     @Get('unsubscribe')
     @UseGuards(AuthorizationGuard)
     unsubscribe(@Param('subscriberId') subscriberId: string, @Req() request: RequestUser) {
