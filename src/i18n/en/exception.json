@@ -71,7 +71,8 @@
     },
     "user-chat-role": {
         "verify": {
-            "has-value": "The role is already registered"
+            "has-value": "The role is already registered",
+            "not-found": "The role is not found"
         }
     },
     "post": {
