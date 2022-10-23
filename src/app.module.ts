@@ -40,6 +40,20 @@ import { UserChatRoleModule } from './user-chat-role/user-chat-role.module'
 import { StyleFileModule } from './style-file/style-file.module'
 import { PrivateChatModule } from './private-chat/private-chat.module';
 
+function splitURI(uri: string) {
+  const [ , port, userAndPassword, hostAndPort, database ] = uri.match(/^(?:([^:\/?#\s]+):\/{2})?(?:([^@\/?#\s]+)@)?([^\/?#\s]+)?(?:\/([^?#\s]*))?(?:[?]([^#\s]+))?\S*$/)
+  const [username, password] = userAndPassword.split(':')
+  const [host, ] = hostAndPort.split(':')
+
+  return {
+    port: parseInt(port),
+    database,
+    username,
+    password,
+    host,
+  }
+}
+
 @Module({
   imports: [
     AuthorizationModule, 
@@ -63,11 +77,11 @@ import { PrivateChatModule } from './private-chat/private-chat.module';
     StyleFileModule,
     SequelizeModule.forRoot({
       dialect: 'postgres',
-      host: process.env.POSTGRES_HOST,
-      port: parseInt(process.env.POSTGRES_PORT),
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB,
+      host: splitURI(process.env.DATABASE_URL).host,
+      port: splitURI(process.env.DATABASE_URL).port,
+      username: splitURI(process.env.DATABASE_URL).username,
+      password: splitURI(process.env.DATABASE_URL).password,
+      database: splitURI(process.env.DATABASE_URL).database,
       models: [User, Privacy, PhotoUser, Activation, Token, Subscribe, Chat, UserChat, PhotoChat, Message, Post, Comment, LikesComment, LikesPost, UserChatRole, UserRole],
       autoLoadModels: true,
       ...(process.env.NODE_ENV === 'production' && {
