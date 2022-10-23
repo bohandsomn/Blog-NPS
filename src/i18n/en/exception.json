@@ -36,7 +36,8 @@
     },
     "privacy": {
         "verify": {
-            "entry-exists": "Database entry already exists"
+            "not-found": "Database entry not found",
+            "has-value": "Database entry already exists"
         }
     },
     "file": {

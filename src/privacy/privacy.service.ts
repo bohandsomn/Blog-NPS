@@ -27,10 +27,15 @@ export class PrivacyService {
         return privacy
     }
 
-    async verify(value: string) {
-        const privacy = await this.getByValue(value)
-        if (privacy) {
-            throw new HttpException(this.i18nService.t<string>('exception.privacy.verify.entry-exists'), HttpStatus.CONFLICT)
+    async verify(value: string, mustHave = false) {
+        const hasPrivacy = !!await this.getByValue(value)
+        
+        if (mustHave && !hasPrivacy) {
+            throw new HttpException(this.i18nService.t<string>('exception.privacy.verify.not-found'), HttpStatus.NOT_FOUND)
+        }
+
+        if (!mustHave && hasPrivacy) {
+            throw new HttpException(this.i18nService.t<string>('exception.privacy.verify.has-value'), HttpStatus.CONFLICT)
         }
     }
 }
