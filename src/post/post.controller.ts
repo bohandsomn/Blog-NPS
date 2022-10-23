@@ -27,7 +27,7 @@ export class PostController {
     }
 
     @ApiOperation({summary: 'Receiving a posts'})
-    @ApiResponse({status: HttpStatus.OK, type: PostModel})
+    @ApiResponse({status: HttpStatus.OK, type: [PostModel]})
     @Get()
     @UsePipes(ValidationPipe)
     getMany(@Query() query: PostGetManyDTO) {
