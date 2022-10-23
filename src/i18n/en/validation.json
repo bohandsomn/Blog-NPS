@@ -99,11 +99,13 @@
         "create": {
             "title": {
                 "is-string": "Title must be a string",
-                "is-defined": "Title must be defined"
+                "is-defined": "Title must be defined",
+                "is-not-empty": "Title must not be empty"
             },
             "content": {
                 "is-string": "Content must be a string",
-                "is-defined": "Content must be defined"
+                "is-defined": "Content must be defined",
+                "is-not-empty": "Content must not be empty"
             },
             "privacy": {
                 "is-string": "Privacy must be a string",
@@ -135,11 +137,13 @@
             },
             "title": {
                 "is-string": "Title must be a string",
-                "is-defined": "Title must be defined"
+                "is-defined": "Title must be defined",
+                "is-not-empty": "Title must not be empty"
             },
             "content": {
                 "is-string": "Content must be a string",
-                "is-defined": "Content must be defined"
+                "is-defined": "Content must be defined",
+                "is-not-empty": "Content must not be empty"
             },
             "privacy": {
                 "is-string": "Privacy must be a string",
