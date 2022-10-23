@@ -1,7 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards, UseInterceptors, UsePipes, HttpStatus } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
-import { DocumentationHttpExceptionDTO } from 'src/documentation/documentation.http-exception.dto'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { Chat } from './chat.model'
@@ -18,8 +17,7 @@ export class ChatController {
     ) { }
     
     @ApiOperation({summary: 'Chat creation'})
-    @ApiResponse({status: HttpStatus.CREATED, type: Chat})
-    @ApiResponse({status: HttpStatus.UNAUTHORIZED, type: DocumentationHttpExceptionDTO})
+    @ApiResponse({status: 200, type: Chat})
     @Post()
     @UsePipes(ValidationPipe)
     @UseGuards(AuthorizationGuard)
@@ -28,9 +26,7 @@ export class ChatController {
     }
 
     @ApiOperation({summary: 'Receiving a chat'})
-    @ApiResponse({status: HttpStatus.OK, type: Chat})
-    @ApiResponse({status: HttpStatus.UNAUTHORIZED, type: DocumentationHttpExceptionDTO})
-    @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
+    @ApiResponse({status: 200, type: Chat})
     @Get('/:chatId')
     @UseGuards(AuthorizationGuard)
     getOne(@Param('chatId') id: string) {
@@ -38,9 +34,7 @@ export class ChatController {
     }
 
     @ApiOperation({summary: 'Receiving a chat'})
-    @ApiResponse({status: HttpStatus.OK, type: Chat})
-    @ApiResponse({status: HttpStatus.UNAUTHORIZED, type: DocumentationHttpExceptionDTO})
-    @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
+    @ApiResponse({status: 200, type: Chat})
     @Get('/user-id/:interlocutorId')
     @UseGuards(AuthorizationGuard)
     getOneByUserId(
@@ -51,8 +45,7 @@ export class ChatController {
     }
 
     @ApiOperation({summary: 'Receiving a chats'})
-    @ApiResponse({status: HttpStatus.OK, type: [Chat]})
-    @ApiResponse({status: HttpStatus.UNAUTHORIZED, type: DocumentationHttpExceptionDTO})
+    @ApiResponse({status: 200, type: [Chat]})
     @Get()
     @UseGuards(AuthorizationGuard)
     getMany(@Req() request: RequestUser) {
@@ -60,8 +53,7 @@ export class ChatController {
     }
 
     @ApiOperation({summary: 'Chat update'})
-    @ApiResponse({status: HttpStatus.OK, type: Chat})
-    @ApiResponse({status: HttpStatus.UNAUTHORIZED, type: DocumentationHttpExceptionDTO})
+    @ApiResponse({status: 200, type: Chat})
     @Put()
     @UsePipes(ValidationPipe)
     @UseGuards(AuthorizationGuard)
@@ -70,8 +62,6 @@ export class ChatController {
     }
 
     @ApiOperation({summary: 'Deleting a chat'})
-    @ApiResponse({status: HttpStatus.NO_CONTENT})
-    @ApiResponse({status: HttpStatus.UNAUTHORIZED, type: DocumentationHttpExceptionDTO})
     @Delete('/:chatId')
     @UseGuards(AuthorizationGuard)
     delete(@Param('chatId') id: string) {

@@ -1,7 +1,6 @@
-import { Body, Controller, Get, Post, UseFilters, UseInterceptors, UsePipes, HttpStatus } from '@nestjs/common'
+import { Body, Controller, Get, Post, UseFilters, UseInterceptors, UsePipes } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { I18nValidationExceptionFilter } from 'nestjs-i18n'
-import { DocumentationHttpExceptionDTO } from 'src/documentation/documentation.http-exception.dto'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { CreatePrivacyDTO } from './DTO/create-privacy.dto'
@@ -17,8 +16,7 @@ export class PrivacyController {
     ) { }
 
     @ApiOperation({summary: 'Privacy creation'})
-    @ApiResponse({status: HttpStatus.OK, type: Privacy})
-    @ApiResponse({status: HttpStatus.CONFLICT, type: DocumentationHttpExceptionDTO})
+    @ApiResponse({status: 200, type: Privacy})
     @Post()
     @UseFilters(new I18nValidationExceptionFilter())
     @UsePipes(ValidationPipe)
@@ -27,7 +25,7 @@ export class PrivacyController {
     }
 
     @ApiOperation({summary: 'Receiving all the privacy'})
-    @ApiResponse({status: HttpStatus.OK, type: [Privacy]})
+    @ApiResponse({status: 200, type: [Privacy]})
     @Get()
     getMany() {
         return this.privacyService.getMany()

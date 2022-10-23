@@ -1,15 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res, UploadedFile, UseGuards, UseInterceptors, UsePipes, HttpStatus } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Req, Res, UploadedFile, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
-import { DocumentationHttpExceptionDTO } from 'src/documentation/documentation.http-exception.dto'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { PhotoResizePipe } from '../transformation/photo-resize.pipe'
 import { PhotoChatCreateBodyDTO } from './DTO/photo-chat-create.dto'
 import { PhotoChatUpdateBodyDTO } from './DTO/photo-chat-update.dto'
-import { PhotoChat } from './photo-chat.model'
 import { PhotoChatService } from './photo-chat.service'
 
 @ApiTags('Chat\'s photo')
@@ -21,18 +19,14 @@ export class PhotoChatController {
     ) { }
 
     @ApiOperation({summary: 'Receiving a photo preview'})
-    @ApiResponse({status: HttpStatus.OK, type: Buffer})
-    @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
     @Get('/:chatId')
     @UseGuards(AuthorizationGuard)
     async getPreview(@Param('chatId') chatId: string, @Res() response: Response) {
-        const stream = await this.photoChatService.getPreview({chatId})
+        const stream = await this.photoChatService.getPreview({chatId, size: 'preview'})
         return stream.pipe(response)
     }
 
     @ApiOperation({summary: 'Photo creation'})
-    @ApiResponse({status: HttpStatus.CREATED, type: PhotoChat})
-    @ApiResponse({status: HttpStatus.CONFLICT, type: DocumentationHttpExceptionDTO})
     @Post()
     @UseGuards(AuthorizationGuard)
     @UseInterceptors(FileInterceptor('file'))
@@ -45,8 +39,6 @@ export class PhotoChatController {
     }
 
     @ApiOperation({summary: 'Photo update'})
-    @ApiResponse({status: HttpStatus.OK, type: PhotoChat})
-    @ApiResponse({status: HttpStatus.CONFLICT, type: DocumentationHttpExceptionDTO})
     @Put()
     @UseGuards(AuthorizationGuard)
     @UseInterceptors(FileInterceptor('file'))
@@ -59,8 +51,6 @@ export class PhotoChatController {
     }
 
     @ApiOperation({summary: 'Deleting a photo'})
-    @ApiResponse({status: HttpStatus.NO_CONTENT, type: PhotoChat})
-    @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
     @Delete('/:chatId')
     @UseGuards(AuthorizationGuard)
     delete(@Param('chatId') chatId: string, @Req() request: RequestUser) {

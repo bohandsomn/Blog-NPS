@@ -15,11 +15,11 @@ export class Subscribe extends Model<Subscribe, SubscribeCreationAttributes> {
 
     @ApiProperty({example: 1})
     @ForeignKey(() => User)
-    @Column({type: DataType.INTEGER, allowNull: false})
+    @Column({type: DataType.INTEGER, allowNull: false })
     userId: number
 
     @ApiProperty({example: 2})
     @ForeignKey(() => User)
-    @Column({type: DataType.INTEGER, allowNull: false})
+    @Column({type: DataType.INTEGER, allowNull: false })
     subscriberId: number
 }

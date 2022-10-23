@@ -54,9 +54,6 @@
     "/likes-comment/:commentId/unlike": {
         "POST": "Коментар успішно скасовано"
     },
-    "/likes-comment/:commentId/:userId": {
-        "GET": "Дані лайка коментаря успішно отримані"
-    },
     "/likes-post/:postId/like": {
         "POST": "Публікація успішно вподобана"
     },
@@ -65,9 +62,6 @@
     },
     "/likes-post/:postId/unlike": {
         "POST": "Публікацію успішно скасовано"
-    },
-    "/likes-post/:postId/:userId": {
-        "GET": "Дані лайка посту успішно отримані"
     },
     "/photo/chat": {
         "POST": "Фото створено",

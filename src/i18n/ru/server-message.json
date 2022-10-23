@@ -54,9 +54,6 @@
     "/likes-comment/:commentId/unlike": {
         "POST": "Комментарий был успешно анлайкнут"
     },
-    "/likes-comment/:commentId/:userId": {
-        "GET": "Данные лайка комментария успешно получены"
-    },
     "/likes-post/:postId/like": {
         "POST": "Пост был успешно лайкнут"
     },
@@ -65,9 +62,6 @@
     },
     "/likes-post/:postId/unlike": {
         "POST": "Пост был успешно анлайкнут"
-    },
-    "/likes-post/:postId/:userId": {
-        "GET": "Данные лайка поста успешно получены"
     },
     "/photo/chat": {
         "POST": "Фотография успешно создана",

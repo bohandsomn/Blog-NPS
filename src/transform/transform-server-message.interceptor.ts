@@ -2,15 +2,19 @@ import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nes
 import { IncomingMessage } from 'http'
 import { I18nService } from 'nestjs-i18n'
 import { map, Observable } from 'rxjs'
-import { TransformServerMessageDTO } from './DTO/transform-server-message.dto'
+
+export interface Response<T> {
+    data: T
+    message: string
+}
 
 @Injectable()
-export class TransformServerMessageInterceptor<T> implements NestInterceptor<T, TransformServerMessageDTO<T>> {
+export class TransformServerMessageInterceptor<T> implements NestInterceptor<T, Response<T>> {
     constructor(
         private readonly i18nService: I18nService
     ) { }
 
-    intercept(context: ExecutionContext, next: CallHandler): Observable<TransformServerMessageDTO<T>> {
+    intercept(context: ExecutionContext, next: CallHandler): Observable<Response<T>> {
         const incomingMessage: IncomingMessage = context.getArgByIndex(0)
         const method = incomingMessage.method
         const path = (incomingMessage as any).route.path
