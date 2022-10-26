@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { I18nService } from 'nestjs-i18n'
 import { Op } from 'sequelize'
+import { PaginationService } from 'src/pagination/pagination.service'
 import { PrivacyService } from 'src/privacy/privacy.service'
 import { PostCreateDTO } from './DTO/post-create.dto'
 import { PostDeleteDTO } from './DTO/post-delete.dto'
@@ -15,6 +16,7 @@ export class PostService {
         @InjectModel(Post) private readonly postRepository: typeof Post,
         private readonly privacyService: PrivacyService,
         private readonly i18nService: I18nService,
+        private readonly paginationService: PaginationService,
     ) { }
 
     async getOne(postId: string) {
@@ -33,11 +35,11 @@ export class PostService {
                     },
                     content: {
                         [Op.like]: `%${query.content}%`
-                    },
-                    privacyId: privacy.id
-                }
+                    }
+                },
+                privacyId: privacy.id
             }
-        })
+        }).then(this.paginationService.slice(parseInt(query.page)))
 
         return posts
     }
