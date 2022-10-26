@@ -39,6 +39,7 @@ import { MailModule } from './mail/mail.module'
 import { UserChatRoleModule } from './user-chat-role/user-chat-role.module'
 import { StyleFileModule } from './style-file/style-file.module'
 import { PrivateChatModule } from './private-chat/private-chat.module';
+import { PaginationModule } from './pagination/pagination.module';
 
 function splitURI(uri: string) {
   const [ , port, userAndPassword, hostAndPort, database ] = uri.match(/^(?:([^:\/?#\s]+):\/{2})?(?:([^@\/?#\s]+)@)?([^\/?#\s]+)?(?:\/([^?#\s]*))?(?:[?]([^#\s]+))?\S*$/)
@@ -118,7 +119,8 @@ function splitURI(uri: string) {
         }
       }
     }),
-    PrivateChatModule
+    PrivateChatModule,
+    PaginationModule
   ]
 })
 export class AppModule {}
