@@ -23,12 +23,13 @@ export class PrivacyService {
     }
 
     async getByValue(value: string) {
+        await this.verify(value, true)
         const privacy = await this.privacyRepository.findOne({where: {value}})
         return privacy
     }
 
     async verify(value: string, mustHave = false) {
-        const hasPrivacy = !!await this.getByValue(value)
+        const hasPrivacy = !!await this.privacyRepository.findOne({where: {value}})
         
         if (mustHave && !hasPrivacy) {
             throw new HttpException(this.i18nService.t<string>('exception.privacy.verify.not-found'), HttpStatus.NOT_FOUND)
