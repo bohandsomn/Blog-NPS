@@ -1,7 +1,8 @@
-import { Body, Controller, Get, Headers, Param, Post, Redirect, Req, Res, UseGuards, UseInterceptors, UsePipes, HttpException, HttpStatus } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Redirect, Req, UseGuards, UseInterceptors, UsePipes, HttpException, HttpStatus } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { Request, Response } from 'express'
+import { Request } from 'express'
 import { DocumentationHttpExceptionDTO } from 'src/documentation/documentation.http-exception.dto'
+import { TransformCleareTokenInterceptor } from 'src/transform/transform-cleare-token.interceptor'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { TransformTokenInterceptor } from 'src/transform/transform-token.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
@@ -63,9 +64,10 @@ export class AuthorizationController {
     @ApiOperation({summary: 'User logout'})
     @ApiResponse({status: HttpStatus.NO_CONTENT})
     @Get('logout')
-    logout(@Headers() headers: Record<'authorization', string>, @Res() response: Response) {
-        this.authorizationService.logout(headers.authorization)
-        response.clearCookie(process.env.COOKIE_TOKEN_NAME)
+    @UseGuards(AuthorizationGuard)
+    @UseInterceptors(new TransformCleareTokenInterceptor())
+    logout(@Req() request: Request) {
+        this.authorizationService.logout(request.cookies[process.env.COOKIE_TOKEN_NAME])
     }
 
     @ApiOperation({summary: 'User activation'})
