@@ -42,7 +42,7 @@ export class User extends Model<User, UserCreationAttributes> {
     password: string
 
     @ApiProperty({example: '2003-05-26'})
-    @Column({type: DataType.TIME, defaultValue: null})
+    @Column({type: DataType.DATE, defaultValue: null})
     birthday: string | null
 
     @ApiProperty({example: 1})
