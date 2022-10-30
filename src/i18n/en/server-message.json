@@ -99,8 +99,10 @@
         "PATCH": "Chat updated successfully"
     },
     "/private-chat/:id": {
-        "GET": "Chat received successfully",
         "DELETE": "Chat deleted successfully"
+    },
+    "/private-chat/:interlocutorId/:userId": {
+        "GET": "Chat received successfully"
     },
     "/style": {
         "GET": "Styles received successfully"

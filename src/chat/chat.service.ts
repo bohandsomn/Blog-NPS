@@ -38,6 +38,23 @@ export class ChatService {
         return chat
     }
 
+    async getOnePrivateChat(interlocutorId: number, userId: number) {
+        const userChat = await this.userChatRepository.findOne({
+            where: {
+                userId: [interlocutorId, userId]
+            }
+        })
+        if (!userChat) {
+            throw new HttpException(this.i18nService.t<string>("exception.chat.get-one.not-found"), HttpStatus.NOT_FOUND)
+        }
+
+        const privateChat = await this.chatRepository.findByPk(userChat.chatId)
+        if (!privateChat) {
+            throw new HttpException(this.i18nService.t<string>("exception.chat.get-one.not-found"), HttpStatus.NOT_FOUND)
+        }
+        return privateChat
+    }
+
     async getOneByUserId(interlocutorId: number, userId: number) {
         const userChat = await this.userChatRepository.findOne({where: [{userId: interlocutorId}, {userId}]})
         if (!userChat) {
