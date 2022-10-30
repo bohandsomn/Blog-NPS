@@ -120,6 +120,9 @@
     "/subscribe/:subscriberId/unsubscribe": {
         "GET": "User has been successfully unsubscribed"
     },
+    "/subscribe/:subscriberId": {
+        "GET": "Subscribe received successfully"
+    },
     "/user": {
         "PUT": "User updated successfully"
     },

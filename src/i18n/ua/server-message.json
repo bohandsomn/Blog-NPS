@@ -120,6 +120,9 @@
     "/subscribe/:subscriberId/unsubscribe": {
         "GET": "Користувач успішно скасував підписку"
     },
+    "/subscribe/:subscriberId": {
+        "GET": "Підписка успішно отримано"
+    },
     "/user": {
         "PUT": "Користувача успішно оновлено"
     },

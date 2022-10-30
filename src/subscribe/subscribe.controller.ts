@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Req, UseGuards, UseInterceptors, HttpStatus } from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization.guard'
+import { DocumentationHttpExceptionDTO } from 'src/documentation/documentation.http-exception.dto'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
 import { Subscribe } from './subscribe.model'
 import { SubscribeService } from './subscribe.service'
@@ -27,5 +28,14 @@ export class SubscribeController {
     @UseGuards(AuthorizationGuard)
     unsubscribe(@Param('subscriberId') subscriberId: string, @Req() request: RequestUser) {
         return this.subscribeService.unsubscribe({ userId: request.user.id, subscriberId: parseInt(subscriberId) })
+    }
+
+    @ApiOperation({summary: 'Receiving a unsubscribe'})
+    @ApiResponse({status: HttpStatus.OK, type: Subscribe})
+    @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
+    @Get()
+    @UseGuards(AuthorizationGuard)
+    getSubscribe(@Param('subscriberId') subscriberId: string, @Req() request: RequestUser) {
+        return this.subscribeService.getSubscribe({ userId: request.user.id, subscriberId: parseInt(subscriberId) })
     }
 }

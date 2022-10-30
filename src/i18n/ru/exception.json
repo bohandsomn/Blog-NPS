@@ -92,6 +92,11 @@
             "not-access": "Доступ в чат запрещен"
         }
     },
+    "subscribe": {
+        "get-subscribe": {
+            "not-found": "Подписка не найдена"
+        }
+    },
     "guard": {
         "authorization": {
             "unauthorized": "Пользователь не авторизован"
