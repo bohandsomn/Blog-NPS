@@ -84,6 +84,9 @@
     "/post/:postId": {
         "GET": "Post received successfully"
     },
+    "/post/user/:userId": {
+        "GET": "Posts received successfully"
+    },
     "/post": {
         "GET": "Posts received successfully",
         "POST": "Post created successfully",

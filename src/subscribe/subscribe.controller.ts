@@ -30,7 +30,7 @@ export class SubscribeController {
         return this.subscribeService.unsubscribe({ userId: request.user.id, subscriberId: parseInt(subscriberId) })
     }
 
-    @ApiOperation({summary: 'Receiving a unsubscribe'})
+    @ApiOperation({summary: 'Receiving a subscribe'})
     @ApiResponse({status: HttpStatus.OK, type: Subscribe})
     @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
     @Get()

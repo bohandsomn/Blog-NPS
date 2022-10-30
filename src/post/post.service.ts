@@ -25,6 +25,11 @@ export class PostService {
         return post
     }
 
+    async getManyByUserId(userId: number) {
+        const posts = await this.postRepository.findAll({where: {userId}})
+        return posts
+    }
+
     async getMany(query: PostGetManyDTO) {
         const privacy = await this.privacyService.getByValue(query.privacy)
         const posts = await this.postRepository.findAll({
