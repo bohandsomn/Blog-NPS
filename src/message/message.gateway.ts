@@ -5,6 +5,7 @@ import { Socket, Server } from 'socket.io'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 import { MessageConnectDTO } from './DTO/message-connect.dto'
 import { MessageCreateDTO } from './DTO/message-create.dto'
+import { MessageGetManyDTO } from './DTO/message-get-many.dto'
 import { Message } from './message.model'
 import { MessageService } from './message.service'
 
@@ -26,16 +27,23 @@ export class MessageGateway {
         this.server.to(dto.chatId.toString()).emit('message', message)
     }
 
+    @ApiOperation({summary: 'Receiving a messages'})
+    @ApiResponse({status: 200, type: [Message]})
+    @SubscribeMessage('get-many')
+    @UsePipes(ValidationPipe)
+    async getMany(@MessageBody() dto: MessageGetManyDTO) {
+        const messages = await this.messageService.getMany(dto)
+        this.server.to(dto.chatId.toString()).emit('get-many', messages)
+    }
+
     @ApiOperation({summary: 'Join to chat room'})
     @SubscribeMessage('join-room')
-    @UsePipes(ValidationPipe)
     handleRoomJoin(client: Socket, dto: MessageConnectDTO) {
         client.join(dto.chatId.toString())
     }
 
     @ApiOperation({summary: 'Leave from chat room'})
     @SubscribeMessage('leave-room')
-    @UsePipes(ValidationPipe)
     handleRoomLeave(client: Socket, dto: MessageConnectDTO) {
         client.leave(dto.chatId.toString())
     }
