@@ -81,6 +81,17 @@
             "content": {
                 "is-string": "Content must be a string"
             }
+        },
+        "get-many": {
+            "chat-id": {
+                "is-number": "Id must be a number"
+            },
+            "user-id": {
+                "is-number": "Id must be a number"
+            },
+            "page": {
+                "is-number": "Page must be a number"
+            }
         }
     },
     "photo": {
