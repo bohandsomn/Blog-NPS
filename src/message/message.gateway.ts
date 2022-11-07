@@ -9,7 +9,7 @@ import { Message } from './message.model'
 import { MessageService } from './message.service'
 
 @ApiTags('Message')
-@WebSocketGateway()
+@WebSocketGateway({ cors: true })
 export class MessageGateway {
     constructor(
         private readonly messageService: MessageService
