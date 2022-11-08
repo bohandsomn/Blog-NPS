@@ -22,7 +22,7 @@ export class MessageService {
 
     async getMany(dto: MessageGetManyDTO) {
         return this.messageRepository
-            .findAll({where: {chatId: dto.chatId}})
+            .findAll({where: {chatId: dto.chatId}, order: [['id', 'DESC']]})
             .then(this.paginationService.slice(dto.page, 10))
     }
 }
