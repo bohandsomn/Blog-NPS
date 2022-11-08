@@ -36,7 +36,8 @@
     },
     "privacy": {
         "verify": {
-            "entry-exists": "Database entry already exists"
+            "not-found": "Database entry not found",
+            "has-value": "Database entry already exists"
         }
     },
     "file": {
@@ -70,22 +71,30 @@
     },
     "user-chat-role": {
         "verify": {
-            "has-value": "The role is already registered"
+            "has-value": "The role is already registered",
+            "not-found": "The role is not found"
         }
     },
     "post": {
         "verify": {
-            "not-found": "Post not found"
+            "not-found": "Post not found",
+            "has-value": "Post already exists"
         }
     },
     "comment": {
         "verify": {
-            "not-found": "Comment not found"
+            "not-found": "Comment not found",
+            "has-value": "Comment already exists"
         }
     },
     "private-chat": {
         "verify": {
             "not-access": "Access to the chat is forbidden"
+        }
+    },
+    "subscribe": {
+        "get-subscribe": {
+            "not-found": "Subscribe not found"
         }
     },
     "guard": {

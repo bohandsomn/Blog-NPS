@@ -48,7 +48,8 @@
     "comment": {
         "create": {
             "content": {
-                "is-string": "Content must be a string"
+                "is-string": "Content must be a string",
+                "is-not-empty": "Content must not be empty"
             },
             "post-id": {
                 "is-string": "Post's id must be a string"
@@ -56,7 +57,8 @@
         },
         "update": {
             "content": {
-                "is-string": "Content must be a string"
+                "is-string": "Content must be a string",
+                "is-not-empty": "Content must not be empty"
             },
             "post-id": {
                 "is-string": "Post's id must be a string"
@@ -79,6 +81,17 @@
             "content": {
                 "is-string": "Content must be a string"
             }
+        },
+        "get-many": {
+            "chat-id": {
+                "is-number": "Id must be a number"
+            },
+            "user-id": {
+                "is-number": "Id must be a number"
+            },
+            "page": {
+                "is-number": "Page must be a number"
+            }
         }
     },
     "photo": {
@@ -99,11 +112,13 @@
         "create": {
             "title": {
                 "is-string": "Title must be a string",
-                "is-defined": "Title must be defined"
+                "is-defined": "Title must be defined",
+                "is-not-empty": "Title must not be empty"
             },
             "content": {
                 "is-string": "Content must be a string",
-                "is-defined": "Content must be defined"
+                "is-defined": "Content must be defined",
+                "is-not-empty": "Content must not be empty"
             },
             "privacy": {
                 "is-string": "Privacy must be a string",
@@ -135,11 +150,13 @@
             },
             "title": {
                 "is-string": "Title must be a string",
-                "is-defined": "Title must be defined"
+                "is-defined": "Title must be defined",
+                "is-not-empty": "Title must not be empty"
             },
             "content": {
                 "is-string": "Content must be a string",
-                "is-defined": "Content must be defined"
+                "is-defined": "Content must be defined",
+                "is-not-empty": "Content must not be empty"
             },
             "privacy": {
                 "is-string": "Privacy must be a string",

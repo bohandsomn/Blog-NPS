@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { I18nService } from 'nestjs-i18n'
 import { Op } from 'sequelize'
+import { PaginationService } from 'src/pagination/pagination.service'
 import { PrivacyService } from 'src/privacy/privacy.service'
 import { PostCreateDTO } from './DTO/post-create.dto'
 import { PostDeleteDTO } from './DTO/post-delete.dto'
@@ -15,12 +16,18 @@ export class PostService {
         @InjectModel(Post) private readonly postRepository: typeof Post,
         private readonly privacyService: PrivacyService,
         private readonly i18nService: I18nService,
+        private readonly paginationService: PaginationService,
     ) { }
 
     async getOne(postId: string) {
         await this.verify(parseInt(postId), true)
         const post = await this.postRepository.findByPk(parseInt(postId))
         return post
+    }
+
+    async getManyByUserId(userId: number) {
+        const posts = await this.postRepository.findAll({where: {userId}})
+        return posts
     }
 
     async getMany(query: PostGetManyDTO) {
@@ -33,11 +40,11 @@ export class PostService {
                     },
                     content: {
                         [Op.like]: `%${query.content}%`
-                    },
-                    privacyId: privacy.id
-                }
+                    }
+                },
+                privacyId: privacy.id
             }
-        })
+        }).then(this.paginationService.slice(parseInt(query.page)))
 
         return posts
     }
@@ -75,8 +82,13 @@ export class PostService {
 
     async verify(postId: number, mustHave = false) {
         const hasPost = !!await this.postRepository.findByPk(postId)
-        if (hasPost !== mustHave) {
+
+        if (mustHave && !hasPost) {
             throw new HttpException(this.i18nService.t<string>('exception.post.verify.not-found'), HttpStatus.NOT_FOUND)
+        }
+
+        if (!mustHave && hasPost) {
+            throw new HttpException(this.i18nService.t<string>('exception.post.verify.has-value'), HttpStatus.NOT_FOUND)
         }
     }
 }

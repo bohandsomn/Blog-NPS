@@ -82,7 +82,7 @@ export class TokenService {
     }
 
     async delete(refreshToken: string) {
-        await this.tokenRepository.destroy({where: {value: refreshToken}})
+        return this.tokenRepository.destroy({where: {value: refreshToken}})
     }
 
     split(authorization: string) {

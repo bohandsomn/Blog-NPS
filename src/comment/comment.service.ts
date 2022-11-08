@@ -40,8 +40,13 @@ export class CommentService {
 
     async verify(commentId: number, mustHave = false) {
         const hasPost = !!await this.commentRepository.findByPk(commentId)
-        if (hasPost !== mustHave) {
+
+        if (mustHave && !hasPost) {
             throw new HttpException(this.i18nService.t<string>('exception.comment.verify.not-found'), HttpStatus.NOT_FOUND)
+        }
+
+        if (!mustHave && hasPost) {
+            throw new HttpException(this.i18nService.t<string>('exception.comment.verify.has-value'), HttpStatus.NOT_FOUND)
         }
     }
 }

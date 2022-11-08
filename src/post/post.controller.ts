@@ -34,6 +34,13 @@ export class PostController {
         return this.postService.getMany(query)
     }
 
+    @ApiOperation({summary: 'Receiving a posts'})
+    @ApiResponse({status: HttpStatus.OK, type: [PostModel]})
+    @Get('/user/:userId')
+    getManyByUserId(@Param('userId') userId: string) {
+        return this.postService.getManyByUserId(parseInt(userId))
+    }
+
     @ApiOperation({summary: 'Post creation'})
     @ApiResponse({status: HttpStatus.CREATED, type: PostModel})
     @Post()

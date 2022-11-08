@@ -38,17 +38,34 @@ export class ChatService {
         return chat
     }
 
-    async getOneByUserId(interlocutorId: number, userId: number) {
-        const userChat = await this.userChatRepository.findOne({where: [{userId: interlocutorId}, {userId}]})
+    async getOnePrivateChat(interlocutorId: number, userId: number) {
+        const userChat = await this.userChatRepository.findOne({
+            where: {
+                userId: [interlocutorId, userId]
+            }
+        })
         if (!userChat) {
             throw new HttpException(this.i18nService.t<string>("exception.chat.get-one.not-found"), HttpStatus.NOT_FOUND)
         }
-        const chat = await this.chatRepository.findByPk(userChat.chatId)
-        if (!chat) {
+
+        const privateChat = await this.chatRepository.findByPk(userChat.chatId)
+        if (!privateChat) {
             throw new HttpException(this.i18nService.t<string>("exception.chat.get-one.not-found"), HttpStatus.NOT_FOUND)
         }
-        return chat
+        return privateChat
     }
+
+    // async getOneByUserId(interlocutorId: number, userId: number) {
+    //     const userChat = await this.userChatRepository.findOne({where: [{userId: interlocutorId}, {userId}]})
+    //     if (!userChat) {
+    //         throw new HttpException(this.i18nService.t<string>("exception.chat.get-one.not-found"), HttpStatus.NOT_FOUND)
+    //     }
+    //     const chat = await this.chatRepository.findByPk(userChat.chatId)
+    //     if (!chat) {
+    //         throw new HttpException(this.i18nService.t<string>("exception.chat.get-one.not-found"), HttpStatus.NOT_FOUND)
+    //     }
+    //     return chat
+    // }
 
     async getMany(userId: number) {
         return this.userService.getChats(userId)

@@ -5,10 +5,14 @@ import { Message } from './message.model'
 import { MessageGateway } from './message.gateway'
 import { SequelizeModule } from '@nestjs/sequelize'
 import { MessageService } from './message.service';
+import { PaginationModule } from 'src/pagination/pagination.module'
 
 @Module({
-    imports: [SequelizeModule.forFeature([Message, Chat, User])],
+    imports: [
+        SequelizeModule.forFeature([Message, Chat, User]),
+        PaginationModule
+    ],
     providers: [MessageGateway, MessageService],
-    exports: [MessageGateway]
+    exports: [MessageGateway],
 })
 export class MessageModule {}

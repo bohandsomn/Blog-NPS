@@ -84,6 +84,9 @@
     "/post/:postId": {
         "GET": "Post received successfully"
     },
+    "/post/user/:userId": {
+        "GET": "Posts received successfully"
+    },
     "/post": {
         "GET": "Posts received successfully",
         "POST": "Post created successfully",
@@ -99,8 +102,10 @@
         "PATCH": "Chat updated successfully"
     },
     "/private-chat/:id": {
-        "GET": "Chat received successfully",
         "DELETE": "Chat deleted successfully"
+    },
+    "/private-chat/:interlocutorId/:userId": {
+        "GET": "Chat received successfully"
     },
     "/style": {
         "GET": "Styles received successfully"
@@ -119,6 +124,9 @@
     },
     "/subscribe/:subscriberId/unsubscribe": {
         "GET": "User has been successfully unsubscribed"
+    },
+    "/subscribe/:subscriberId": {
+        "GET": "Subscribe received successfully"
     },
     "/user": {
         "PUT": "User updated successfully"

@@ -37,18 +37,18 @@ export class ChatController {
         return this.chatService.getOne(parseInt(id))
     }
 
-    @ApiOperation({summary: 'Receiving a chat'})
-    @ApiResponse({status: HttpStatus.OK, type: Chat})
-    @ApiResponse({status: HttpStatus.UNAUTHORIZED, type: DocumentationHttpExceptionDTO})
-    @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
-    @Get('/user-id/:interlocutorId')
-    @UseGuards(AuthorizationGuard)
-    getOneByUserId(
-        @Param('interlocutorId') interlocutorId: string,
-        @Req() request: RequestUser
-    ) {
-        return this.chatService.getOneByUserId(parseInt(interlocutorId), request.user.id)
-    }
+    // @ApiOperation({summary: 'Receiving a chat'})
+    // @ApiResponse({status: HttpStatus.OK, type: Chat})
+    // @ApiResponse({status: HttpStatus.UNAUTHORIZED, type: DocumentationHttpExceptionDTO})
+    // @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
+    // @Get('/user-id/:interlocutorId')
+    // @UseGuards(AuthorizationGuard)
+    // getOneByUserId(
+    //     @Param('interlocutorId') interlocutorId: string,
+    //     @Req() request: RequestUser
+    // ) {
+    //     return this.chatService.getOneByUserId(parseInt(interlocutorId), request.user.id)
+    // }
 
     @ApiOperation({summary: 'Receiving a chats'})
     @ApiResponse({status: HttpStatus.OK, type: [Chat]})
