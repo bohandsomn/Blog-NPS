@@ -38,3 +38,4 @@ $ npm run start:prod
 # Link
 
 - [Documentation](https://bohandsomn-blog.herokuapp.com/api)
+- [DB Diagram](https://dbdiagram.io/d/6212a09f485e433543e69b6f)
