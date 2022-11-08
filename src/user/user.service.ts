@@ -46,12 +46,13 @@ export class UserService {
 
         const privacy = await this.privacyService.getByValue(dto.privacy)
         
-        const candidateByEmail = await this.getByEmail(dto.email)
-        const candidateByLogin = await this.getByLogin(dto.login)
-        if (candidateByEmail.id !== user.id) {
+        const candidateByEmail = await this.getByEmail(dto.email) as User | null
+        const candidateByLogin = await this.getByLogin(dto.login) as User | null
+
+        if ((candidateByEmail?.id) && candidateByEmail.id !== user.id) {
             throw new HttpException(this.i18nService.t<string>("exception.user.id-verify.has-id"), HttpStatus.CONFLICT)
         }
-        if (candidateByLogin.id !== user.id) {
+        if ((candidateByLogin?.id) && candidateByLogin.id !== user.id) {
             throw new HttpException(this.i18nService.t<string>("exception.user.email-verify.has-email"), HttpStatus.CONFLICT)    
         }
 

@@ -5,6 +5,7 @@ import { AuthorizationGuard, RequestUser } from 'src/authorization/authorization
 import { AuthorizationUserDataResponseDTO } from 'src/authorization/DTO/authorization-user-data-response.dto'
 import { DocumentationHttpExceptionDTO } from 'src/documentation/documentation.http-exception.dto'
 import { TransformServerMessageInterceptor } from 'src/transform/transform-server-message.interceptor'
+import { TransformTokenInterceptor } from 'src/transform/transform-token.interceptor'
 import { ValidationPipe } from 'src/validation/validation.pipe'
 
 import { UpdateUserDTO } from './DTO/update-user.dto'
@@ -26,13 +27,9 @@ export class UserController {
     @Put()
     @UseGuards(AuthorizationGuard)
     @UsePipes(ValidationPipe)
-    async update(@Body() dto: UpdateUserDTO, @Req() request: RequestUser, @Res() response: Response): Promise<AuthorizationUserDataResponseDTO> {
-        const { user, token: { refreshToken, accessToken } } = await this.userService.update({...dto, id: request.user.id})
-        response.cookie(process.env.COOKIE_TOKEN_NAME, refreshToken, { maxAge: parseInt(process.env.COOKIE_REFRESH_TOKEN_MAX_AGE), httpOnly: true })
-        return {
-            user,
-            accessToken
-        }
+    @UseInterceptors(new TransformTokenInterceptor())
+    update(@Body() dto: UpdateUserDTO, @Req() request: RequestUser) {
+        return this.userService.update({...dto, id: request.user.id})
     }
 
     @ApiOperation({summary: 'User receive'})

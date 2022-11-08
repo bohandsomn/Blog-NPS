@@ -21,8 +21,7 @@ export class PrivateChatService {
     }
 
     async getOne(dto: PrivateChatGetOneDTO) {
-        const chat = await this.chatServise.getOne(dto.id)
-        await this.verify(chat.id, dto.userId)
+        const chat = await this.chatServise.getOnePrivateChat(dto.interlocutorId, dto.userId)
         return chat
     }
 

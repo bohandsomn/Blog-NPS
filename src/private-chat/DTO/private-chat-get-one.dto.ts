@@ -1,4 +1,4 @@
 export class PrivateChatGetOneDTO {
-    readonly id: number
+    readonly interlocutorId: number
     readonly userId: number
 }

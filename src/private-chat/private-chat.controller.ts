@@ -28,10 +28,12 @@ export class PrivateChatController {
     @ApiResponse({status: HttpStatus.OK, type: Chat})
     @ApiResponse({status: HttpStatus.NOT_FOUND, type: DocumentationHttpExceptionDTO})
     @ApiResponse({status: HttpStatus.FORBIDDEN, type: DocumentationHttpExceptionDTO})
-    @Get('/:id')
-    @UseGuards(AuthorizationGuard)
-    getOne(@Req() request: RequestUser, @Param('id') id: string) {
-        return this.privateChatService.getOne({id: parseInt(id), userId: request.user.id})
+    @Get('/:interlocutorId/:userId')
+    getOne(@Param('interlocutorId') interlocutorId: string, @Param('userId') userId: string) {
+        return this.privateChatService.getOne({
+            interlocutorId: parseInt(interlocutorId), 
+            userId: parseInt(userId)
+        })
     }
 
     @ApiOperation({summary: 'Chat update'})
